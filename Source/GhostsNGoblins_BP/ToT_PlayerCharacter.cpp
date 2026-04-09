@@ -36,6 +36,7 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReference)
 {
 	FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-
+	
+	
 }
 
