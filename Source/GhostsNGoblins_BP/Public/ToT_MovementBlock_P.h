@@ -52,4 +52,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player")
 	bool PlayerInBox = false; 
 	
+	UFUNCTION()
+	void SpawnEnemies();
+	
+	
+	int EnemiesInBox = 0;
+	
+	UPROPERTY(EditAnywhere, Category="Spawner")
+	int EnemySpawn;
+	
+	UPROPERTY(EditAnywhere, Category="Spawner")
+	int EnemySpawnRange = 2; 
+	
+	UPROPERTY(EditAnywhere, Category="Spawner")
+	float DelaySpawnTimer = 2.f; 
+	
 };

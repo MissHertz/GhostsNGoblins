@@ -53,3 +53,11 @@ void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AAc
 	}
 }
 
+void AToT_MovementBlock_P::SpawnEnemies()
+{
+	if (PlayerInBox == true)
+	{
+		
+	}
+}
+
