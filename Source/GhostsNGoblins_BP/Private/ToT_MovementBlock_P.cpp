@@ -97,6 +97,7 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 // Spawning zombie function
 void AToT_MovementBlock_P::SpawnZombie()
 {
+	
 }
 
 // Spawning bat function
