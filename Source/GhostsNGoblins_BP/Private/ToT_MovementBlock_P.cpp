@@ -34,9 +34,11 @@ void AToT_MovementBlock_P::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+// When player starts overlapping with the box
 void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	// Checks if it actually is the player or not that enters the box
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = true;
@@ -45,9 +47,11 @@ void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	}
 }
 
+// When player leaves the box
 void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	// Checks if it actually is the player leaving the box
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = false;
@@ -55,10 +59,13 @@ void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AAc
 	}
 }
 
+// Enemy spawner
 void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 {
+	// Checks if player is in the box
 	if (PlayerInBox == true)
 	{
+		// Has time pass to avoid enemies spawning all the time (basically a buffer)
 		EnemySpawnTime -= DeltaTime; 
 		
 		if (EnemySpawnTime <= 0)
@@ -79,6 +86,7 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 				break;
 			}
 			
+			// Debug message
 			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy"));
 			
 			EnemySpawnTime = 5;
@@ -86,10 +94,12 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 	}
 }
 
+// Spawning zombie function
 void AToT_MovementBlock_P::SpawnZombie()
 {
 }
 
+// Spawning bat function
 void AToT_MovementBlock_P::SpawnBat()
 {
 }
