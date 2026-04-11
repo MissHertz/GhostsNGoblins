@@ -77,6 +77,7 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 			{
 			case 0: 
 				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE"));
+				SpawnZombie();
 				break;
 			case 1:
 				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning BAT"));
@@ -97,6 +98,26 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 // Spawning zombie function
 void AToT_MovementBlock_P::SpawnZombie()
 {
+	FVector PlayerLocation = Player->GetActorLocation();
+	float PositionX = PlayerLocation.X + 500;
+	float PositionZ = PlayerLocation.Z + 50;
+	
+	FVector ZombieSpawnLocation(PositionX, PlayerLocation.Y, PositionZ); 
+	// ZombieSpawnLocation.X = PositionX;
+	// ZombieSpawnLocation.Y = PlayerLocation.Y;
+	// ZombieSpawnLocation.Z = PositionZ;
+	
+	FRotator ZombieRotation;
+	ZombieRotation.Yaw = 0;
+	ZombieRotation.Roll = 0;
+	ZombieRotation.Pitch = 0;
+	
+	FActorSpawnParameters SpawnParameters;
+	
+	GetWorld()->SpawnActor<AActor>(Zombie, 
+		ZombieSpawnLocation,
+		ZombieRotation,
+		SpawnParameters);
 	
 }
 

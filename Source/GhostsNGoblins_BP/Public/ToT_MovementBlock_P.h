@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 #include "ToT_MovementBlock_P.generated.h"
 
 class UBoxComponent;
@@ -79,4 +80,12 @@ public:
 	UPROPERTY(EditAnywhere, Category="Spawner")
 	float DelaySpawnTimer = 2.f; 
 	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	UClass* Zombie;
+	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	UClass* Bat;
+	
+	UPROPERTY(EditAnywhere, Category = "Player Character")
+	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
 };
