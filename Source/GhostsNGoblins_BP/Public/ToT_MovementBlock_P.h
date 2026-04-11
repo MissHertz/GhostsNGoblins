@@ -29,6 +29,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
+	/*
+	 * Player in box detection
+	 */
 	UFUNCTION()
 	void OnOverlapBegin(
 	   UPrimitiveComponent* OverlappedComp,
@@ -52,11 +55,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player")
 	bool PlayerInBox = false; 
 	
+	/*
+	 * Spawn enemies function
+	 */
 	UFUNCTION()
-	void SpawnEnemies();
+	void SpawnEnemies(float DeltaTime);
 	
+	UFUNCTION()
+	void SpawnZombie();
 	
-	int EnemiesInBox = 0;
+	UFUNCTION()
+	void SpawnBat();
+	
+	UPROPERTY(EditAnywhere, Category="Spawner")
+	float EnemySpawnTime = 3;
 	
 	UPROPERTY(EditAnywhere, Category="Spawner")
 	int EnemySpawn;

@@ -30,6 +30,7 @@ void AToT_MovementBlock_P::BeginPlay()
 // Called every frame
 void AToT_MovementBlock_P::Tick(float DeltaTime)
 {
+	SpawnEnemies(DeltaTime);
 	Super::Tick(DeltaTime);
 }
 
@@ -40,6 +41,7 @@ void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	{
 		PlayerInBox = true;
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player entered box"));
+		EnemySpawnTime = 5; 
 	}
 }
 
@@ -53,11 +55,42 @@ void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AAc
 	}
 }
 
-void AToT_MovementBlock_P::SpawnEnemies()
+void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 {
 	if (PlayerInBox == true)
 	{
+		EnemySpawnTime -= DeltaTime; 
 		
+		if (EnemySpawnTime <= 0)
+		{
+			
+			int randomInteger = FMath::RandHelper(EnemySpawnRange);
+			
+			switch (randomInteger)
+			{
+			case 0: 
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE"));
+				break;
+			case 1:
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning BAT"));
+				break;
+			default:
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning NOTHING"));
+				break;
+			}
+			
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy"));
+			
+			EnemySpawnTime = 5;
+		}
 	}
+}
+
+void AToT_MovementBlock_P::SpawnZombie()
+{
+}
+
+void AToT_MovementBlock_P::SpawnBat()
+{
 }
 
