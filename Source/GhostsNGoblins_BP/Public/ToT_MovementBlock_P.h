@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Character.h"
+#include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "ToT_MovementBlock_P.generated.h"
 
@@ -86,6 +87,12 @@ public:
 	UPROPERTY(EditAnywhere, Category="Spawn Actors")
 	UClass* Bat;
 	
-	UPROPERTY(EditAnywhere, Category = "Player Character")
-	ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
+	
+	ACharacter* Player = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+	//UPROPERTY()
+	//AToT_PlayerCharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	//AToT_PlayerCharacter* PlayerChar = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
+	
+	//AToT_PlayerCharacter* PlayerChar = Cast<AToT_PlayerCharacter>(Player);
+
 };

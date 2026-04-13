@@ -102,7 +102,7 @@ void AToT_MovementBlock_P::SpawnZombie()
 	float PositionX = PlayerLocation.X + 500;
 	float PositionZ = PlayerLocation.Z + 50;
 	
-	FVector ZombieSpawnLocation(PositionX, PlayerLocation.Y, PositionZ); 
+	FVector ZombieSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
 	// ZombieSpawnLocation.X = PositionX;
 	// ZombieSpawnLocation.Y = PlayerLocation.Y;
 	// ZombieSpawnLocation.Z = PositionZ;
@@ -114,7 +114,7 @@ void AToT_MovementBlock_P::SpawnZombie()
 	
 	FActorSpawnParameters SpawnParameters;
 	
-	GetWorld()->SpawnActor<AActor>(Zombie, 
+	GetWorld()->SpawnActor<ACharacter>(Zombie, 
 		ZombieSpawnLocation,
 		ZombieRotation,
 		SpawnParameters);
