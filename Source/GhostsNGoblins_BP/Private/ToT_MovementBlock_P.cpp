@@ -18,13 +18,13 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	
 	PlayerInBox = false; 
 	
-	Player = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
-	
 }
 
 // Called when the game starts or when spawned
 void AToT_MovementBlock_P::BeginPlay()
 {
+	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), AToT_MovementBlock_P::StaticClass()));
+	
 	Super::BeginPlay();
 	
 }
