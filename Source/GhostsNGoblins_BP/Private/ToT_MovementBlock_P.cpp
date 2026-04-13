@@ -18,6 +18,8 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	
 	PlayerInBox = false; 
 	
+	Player = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+	
 }
 
 // Called when the game starts or when spawned
@@ -98,6 +100,12 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 // Spawning zombie function
 void AToT_MovementBlock_P::SpawnZombie()
 {
+	if (Player == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa"));
+		return;
+	} 
+	
 	FVector PlayerLocation = Player->GetActorLocation();
 	float PositionX = PlayerLocation.X + 500;
 	float PositionZ = PlayerLocation.Z + 50;
@@ -114,10 +122,10 @@ void AToT_MovementBlock_P::SpawnZombie()
 	
 	FActorSpawnParameters SpawnParameters;
 	
-	GetWorld()->SpawnActor<ACharacter>(Zombie, 
-		ZombieSpawnLocation,
-		ZombieRotation,
-		SpawnParameters);
+	// GetWorld()->SpawnActor<ACharacter>(Zombie, 
+	// 	ZombieSpawnLocation,
+	// 	ZombieRotation,
+	// 	SpawnParameters);
 	
 }
 

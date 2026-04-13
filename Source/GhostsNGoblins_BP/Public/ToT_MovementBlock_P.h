@@ -87,8 +87,8 @@ public:
 	UPROPERTY(EditAnywhere, Category="Spawn Actors")
 	UClass* Bat;
 	
-	
-	ACharacter* Player = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+	UPROPERTY()
+	AToT_PlayerCharacter* Player; 
 	//UPROPERTY()
 	//AToT_PlayerCharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 	//AToT_PlayerCharacter* PlayerChar = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
