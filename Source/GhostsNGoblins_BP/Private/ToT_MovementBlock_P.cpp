@@ -23,7 +23,7 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 // Called when the game starts or when spawned
 void AToT_MovementBlock_P::BeginPlay()
 {
-	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetActorOfClass(GetWorld(), AToT_MovementBlock_P::StaticClass()));
+	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 	
 	Super::BeginPlay();
 	
@@ -122,10 +122,10 @@ void AToT_MovementBlock_P::SpawnZombie()
 	
 	FActorSpawnParameters SpawnParameters;
 	
-	// GetWorld()->SpawnActor<ACharacter>(Zombie, 
-	// 	ZombieSpawnLocation,
-	// 	ZombieRotation,
-	// 	SpawnParameters);
+	GetWorld()->SpawnActor<ACharacter>(Zombie, 
+		ZombieSpawnLocation,
+		ZombieRotation,
+		SpawnParameters);
 	
 }
 
