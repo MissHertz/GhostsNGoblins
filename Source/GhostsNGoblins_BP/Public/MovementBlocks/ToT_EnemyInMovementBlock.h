@@ -23,5 +23,5 @@ class GHOSTSNGOBLINS_BP_API IToT_EnemyInMovementBlock
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void EnemyInMovementBlock(AActor Instigator);
+	void EnemyInMovementBlock(AActor* Instigator);
 };
