@@ -75,6 +75,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	bool JustHit;
 	
+	/*
+	 * Melee attack 
+	 */
+	
 	
 	
 };
