@@ -6,13 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/Character.h"
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
+#include "Interaction/ToT_Interact_P.h"
 #include "Kismet/GameplayStatics.h"
+#include "MovementBlocks/ToT_EnemyInMovementBlock.h"
 #include "ToT_MovementBlock_P.generated.h"
 
 class UBoxComponent;
 
 UCLASS()
-class GHOSTSNGOBLINS_BP_API AToT_MovementBlock_P : public AActor
+class GHOSTSNGOBLINS_BP_API AToT_MovementBlock_P : public AActor, public IToT_EnemyInMovementBlock
 {
 	GENERATED_BODY()
 
