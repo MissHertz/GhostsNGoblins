@@ -3,6 +3,8 @@
 
 #include "MovementBlocks/ToT_DownGraveyard_P.h"
 
+#include "MovementBlocks/ToT_MovementBlocks_P.h"
+
 
 // Sets default values
 AToT_DownGraveyard_P::AToT_DownGraveyard_P()
@@ -22,5 +24,15 @@ void AToT_DownGraveyard_P::BeginPlay()
 void AToT_DownGraveyard_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AToT_DownGraveyard_P::EnemyInMovementBlock_Implementation(AActor* Executor)
+{
+	Super::EnemyInMovementBlock_Implementation(Executor);
+	
+	if (Executor->GetClass()->ImplementsInterface(UToT_MovementBlocks_P::StaticClass()))
+	{
+		IToT_MovementBlocks_P::Execute_AtDownGraveyard(Executor);
+	}
 }
 

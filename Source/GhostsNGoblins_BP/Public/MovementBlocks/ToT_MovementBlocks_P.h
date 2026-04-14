@@ -23,20 +23,20 @@ class GHOSTSNGOBLINS_BP_API IToT_MovementBlocks_P
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InDownGraveyard(AActor* Instigator);
+	void AtDownGraveyard();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InUpperGraveyard(AActor* Instigator);
+	void AtUpperGraveyard();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InCryptGraveyard(AActor* Instigator);
+	void AtCryptGraveyard();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InCryptStart(AActor* Instigator);
+	void AtCryptStart();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InCryptMiddle(AActor* Instigator);
+	void AtCryptMiddle();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void InCryptEnd(AActor* Instigator);
+	void AtCryptEnd();
 };
