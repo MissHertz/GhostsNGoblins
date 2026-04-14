@@ -89,10 +89,6 @@ public:
 	
 	UPROPERTY()
 	AToT_PlayerCharacter* Player; 
-	//UPROPERTY()
-	//AToT_PlayerCharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	//AToT_PlayerCharacter* PlayerChar = UGameplayStatics::GetPlayerCharacter(GetWorld(),0);
 	
-	//AToT_PlayerCharacter* PlayerChar = Cast<AToT_PlayerCharacter>(Player);
 
 };
