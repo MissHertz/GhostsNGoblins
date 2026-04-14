@@ -3,6 +3,8 @@
 
 #include "MovementBlocks/ToT_CryptGraveyard_P.h"
 
+#include "MovementBlocks/ToT_MovementBlocks_P.h"
+
 
 // Sets default values
 AToT_CryptGraveyard_P::AToT_CryptGraveyard_P()
@@ -22,5 +24,15 @@ void AToT_CryptGraveyard_P::BeginPlay()
 void AToT_CryptGraveyard_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AToT_CryptGraveyard_P::EnemyInMovementBlock_Implementation(AActor* Executor)
+{
+	Super::EnemyInMovementBlock_Implementation(Executor);
+	
+	if (Executor->GetClass()->ImplementsInterface(UToT_MovementBlocks_P::StaticClass()))
+	{
+		IToT_MovementBlocks_P::Execute_AtCryptGraveyard(Executor);
+	}
 }
 

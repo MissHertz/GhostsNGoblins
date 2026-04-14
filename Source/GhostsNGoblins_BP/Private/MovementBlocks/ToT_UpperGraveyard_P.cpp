@@ -24,3 +24,8 @@ void AToT_UpperGraveyard_P::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AToT_UpperGraveyard_P::EnemyInMovementBlock_Implementation(AActor* Executor)
+{
+	Super::EnemyInMovementBlock_Implementation(Executor);
+}
+

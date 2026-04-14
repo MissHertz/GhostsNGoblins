@@ -23,7 +23,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	//virtual void EnemyInMovementBlock_Implementation(APawn* Instigator) override;
-	
-	virtual void EnemyInMovementBlock_Implementation(AActor* Instigator) override;
+	virtual void EnemyInMovementBlock_Implementation(AActor* Executor) override;
 };

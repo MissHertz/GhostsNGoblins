@@ -3,6 +3,8 @@
 
 #include "MovementBlocks/ToT_MiddleCrypt_P.h"
 
+#include "MovementBlocks/ToT_MovementBlocks_P.h"
+
 
 // Sets default values
 AToT_MiddleCrypt_P::AToT_MiddleCrypt_P()
@@ -22,5 +24,15 @@ void AToT_MiddleCrypt_P::BeginPlay()
 void AToT_MiddleCrypt_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AToT_MiddleCrypt_P::EnemyInMovementBlock_Implementation(AActor* Executor)
+{
+	Super::EnemyInMovementBlock_Implementation(Executor);
+	
+	if (Executor->GetClass()->ImplementsInterface(UToT_MovementBlocks_P::StaticClass()))
+	{
+		IToT_MovementBlocks_P::Execute_AtCryptMiddle(Executor);
+	}
 }
 
