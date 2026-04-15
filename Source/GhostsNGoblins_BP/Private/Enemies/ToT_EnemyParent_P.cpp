@@ -64,10 +64,16 @@ void AToT_EnemyParent_P::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* HitActor,
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (HitActor->IsA(PlayerBlueprint))
+	if (HitComponent and HitComponent->IsA(PlayerBlueprint))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
-		//UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Is hit component, for some reason"));
+	}
+	
+	if (HitActor and HitActor->IsA(PlayerBlueprint))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
+		UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
 	}
 	
 }
