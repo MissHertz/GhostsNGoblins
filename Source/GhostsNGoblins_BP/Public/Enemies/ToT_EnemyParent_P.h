@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/CapsuleComponent.h"
 #include "ToT_EnemyParent_P.generated.h"
 
 UCLASS()
@@ -18,8 +19,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
 	UMeshComponent* EnemyMesh;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
-	UCapsuleComponent* CollisionCapsule;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+	//UCapsuleComponent* CollisionCapsule;
 
 protected:
 	// Called when the game starts or when spawned
@@ -85,6 +86,7 @@ public:
 	// Getting the player class (Must be set in Unreal)
 	UPROPERTY(EditAnywhere, Category="Player")
 	TSubclassOf<ACharacter> PlayerBlueprint; 
+	
 	
 	// Creating the function
 	UFUNCTION()

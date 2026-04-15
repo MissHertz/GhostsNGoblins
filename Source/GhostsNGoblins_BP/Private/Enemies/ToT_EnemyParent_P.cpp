@@ -14,11 +14,10 @@ AToT_EnemyParent_P::AToT_EnemyParent_P()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	// Setting up the actors collision component
-	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
-	RootComponent = CollisionCapsule;
-	CollisionCapsule->SetCollisionProfileName(TEXT("Something"));
-	CollisionCapsule->SetNotifyRigidBodyCollision(true); 
-	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_EnemyParent_P::OnPlayerHit);
+	// CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
+	// RootComponent = CollisionCapsule;
+	// CollisionCapsule->SetCollisionProfileName(TEXT("Something"));
+	// CollisionCapsule->SetNotifyRigidBodyCollision(true); 
 	
 	
 	// Health Related
@@ -46,8 +45,9 @@ AToT_EnemyParent_P::AToT_EnemyParent_P()
 void AToT_EnemyParent_P::BeginPlay()
 {
 	Super::BeginPlay();
-
 	
+	UCapsuleComponent* CollisionCapsule = GetCapsuleComponent();
+	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_EnemyParent_P::OnPlayerHit);
 }
 
 // Called every frame
