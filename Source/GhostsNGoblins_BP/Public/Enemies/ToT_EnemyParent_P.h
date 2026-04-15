@@ -17,6 +17,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
 	UMeshComponent* EnemyMesh;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+	UCapsuleComponent* CollisionCapsule;
 
 protected:
 	// Called when the game starts or when spawned
@@ -79,6 +82,16 @@ public:
 	 * Melee attack 
 	 */
 	
+	// Getting the player class (Must be set in Unreal)
+	UPROPERTY(EditAnywhere, Category="Player")
+	TSubclassOf<ACharacter> PlayerBlueprint; 
 	
+	// Creating the function
+	UFUNCTION()
+	void OnPlayerHit(UPrimitiveComponent* HitComponent, 
+		AActor* HitActor, 
+		UPrimitiveComponent* OtherComponent, 
+		FVector NormalImpulse, 
+		const FHitResult& Hit);
 	
 };
