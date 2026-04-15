@@ -15,6 +15,7 @@ AToT_EnemyParent_P::AToT_EnemyParent_P()
 	
 	// Setting up the actors collision component
 	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
+	RootComponent = CollisionCapsule;
 	CollisionCapsule->SetCollisionProfileName(TEXT("Something"));
 	CollisionCapsule->SetNotifyRigidBodyCollision(true); 
 	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_EnemyParent_P::OnPlayerHit);
@@ -64,13 +65,7 @@ void AToT_EnemyParent_P::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* HitActor,
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (HitComponent and HitComponent->IsA(PlayerBlueprint))
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Is hit component, for some reason"));
-	}
-	
-	if (HitActor and HitActor->IsA(PlayerBlueprint))
+	if (HitActor and PlayerBlueprint and  HitActor->IsA(PlayerBlueprint))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
 		UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());

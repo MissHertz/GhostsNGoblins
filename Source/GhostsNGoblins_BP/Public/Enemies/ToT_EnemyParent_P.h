@@ -37,45 +37,45 @@ public:
 	 */
 	
 	// Health related 
-	UPROPERTY(EditAnywhere, Category = "Health")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth; 
 	
-	UPROPERTY(EditAnywhere, Category = "Health")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "Health")
 	float CurrentHealth; 
 	
 	// Movement related
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	float EnemySpeed;
 	
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	bool IsMovingRight;
 	
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	bool IsMovingLeft;
 	
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	float EnemyGoalPatrolRight;
 	
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	float EnemyGoalPatrolLeft;
 	
-	UPROPERTY(EditAnywhere, Category = "Enemy Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	float LanePositionY;
 	
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	int MovementLane;
 	
 	// Combat Related
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	float DamageToPlayer;
 	
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool TwoLaneAttack;
 	
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool CanAttack;
 	
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool JustHit;
 	
 	/*
