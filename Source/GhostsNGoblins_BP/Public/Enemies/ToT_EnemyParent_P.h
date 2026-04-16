@@ -79,6 +79,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool JustHit;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	float EnemyHitCooldown;
+	
 	/*
 	 * Melee attack 
 	 */

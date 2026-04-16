@@ -54,6 +54,19 @@ void AToT_EnemyParent_P::BeginPlay()
 void AToT_EnemyParent_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	if (JustHit == true)
+	{
+		if (EnemyHitCooldown > 0)
+		{
+			EnemyHitCooldown -= DeltaTime;
+		}
+		else if (EnemyHitCooldown <= 0)
+		{
+			JustHit = false; 
+		}
+
+	}
 }
 
 // Called to bind functionality to input
@@ -67,8 +80,13 @@ void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* 
 {
 	if (HitActor and PlayerBlueprint and  HitActor->IsA(PlayerBlueprint))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
-		UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
+		if (JustHit == false)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
+			UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
+			EnemyHitCooldown = 2;
+			JustHit = true; 
+		}
 	}
 	
 }
