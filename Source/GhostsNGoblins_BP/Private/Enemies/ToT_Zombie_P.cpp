@@ -48,6 +48,10 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
 		if (CurrentHealth <= 0)
 		{
+			FVector ZombieLocation = this->GetActorLocation();
+			FRotator Rotation = FRotator(0, 0, 0);
+			FActorSpawnParameters SpawnParameters;
+			GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
 			this->Destroy();
 		}

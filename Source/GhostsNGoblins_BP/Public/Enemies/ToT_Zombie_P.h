@@ -33,4 +33,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	UAnimMontage* HitAnimation; 
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drop Objects")
+	UClass* DropKey; 
+	
 };
