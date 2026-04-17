@@ -36,4 +36,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drop Objects")
 	UClass* DropKey; 
 	
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	// UClass* Player; 
+	
 };

@@ -4,6 +4,8 @@
 #include "Enemies/ToT_Zombie_P.h"
 
 #include "StaticMeshSceneProxy.h"
+#include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -48,6 +50,13 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
 		if (CurrentHealth <= 0)
 		{
+			// TArray<AActor*> Actors;
+			// UGameplayStatics::GetAllActorsOfClass(GetWorld(), AToT_PlayerCharacter::StaticClass(), Actors);
+			// for (AActor* Actor : Actors)
+			// {
+			// 	if (Actor.)
+			// }
+			//
 			FVector ZombieLocation = this->GetActorLocation();
 			FRotator Rotation = FRotator(0, 0, 0);
 			FActorSpawnParameters SpawnParameters;
