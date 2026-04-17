@@ -30,4 +30,7 @@ public:
 	void ZombieAttacked(AActor* DamagedActor, float Damage, 
 		const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* HitAnimation; 
+	
 };

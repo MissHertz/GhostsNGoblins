@@ -45,6 +45,12 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 	{
 		CurrentHealth -= Damage; 
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
+		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
+		if (CurrentHealth <= 0)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
+			this->Destroy();
+		}
 	}
 }
 
