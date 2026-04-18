@@ -15,6 +15,7 @@ AToT_Zombie_P::AToT_Zombie_P()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
+	PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin);
 	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
 }
@@ -68,5 +69,11 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 			this->Destroy();
 		}
 	}
+}
+
+void AToT_Zombie_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
 }
 
