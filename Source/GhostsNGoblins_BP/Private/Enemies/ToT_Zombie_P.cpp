@@ -14,6 +14,8 @@ AToT_Zombie_P::AToT_Zombie_P()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
+	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
 }
 
@@ -56,7 +58,8 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 			// {
 			// 	if (Actor.)
 			// }
-			//
+			
+			// Spawning key, currently every zombie does this
 			FVector ZombieLocation = this->GetActorLocation();
 			FRotator Rotation = FRotator(0, 0, 0);
 			FActorSpawnParameters SpawnParameters;

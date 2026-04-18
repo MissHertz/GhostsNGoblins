@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ToT_EnemyParent_P.h"
+#include "Components/BoxComponent.h"
 #include "ToT_Zombie_P.generated.h"
 
 UCLASS()
@@ -14,6 +15,9 @@ class GHOSTSNGOBLINS_BP_API AToT_Zombie_P : public AToT_EnemyParent_P
 public:
 	// Sets default values for this character's properties
 	AToT_Zombie_P();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision")
+	UBoxComponent* PlayerOverlapBox;
 
 protected:
 	// Called when the game starts or when spawned
