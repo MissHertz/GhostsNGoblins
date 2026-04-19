@@ -53,7 +53,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= Damage; 
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
 		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
 		if (CurrentHealth <= 0)
 		{
@@ -69,7 +69,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 			FRotator Rotation = FRotator(0, 0, 0);
 			FActorSpawnParameters SpawnParameters;
 			GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
 			this->Destroy();
 		}
 	}
