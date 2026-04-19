@@ -122,9 +122,8 @@ void AToT_Zombie_P::SetMovementPositions()
 	}
 	else
 	{
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
-		}
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
+		this->Destroy();	
 	}
 	// else
 	// {
