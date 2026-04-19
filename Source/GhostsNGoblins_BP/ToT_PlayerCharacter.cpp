@@ -8,6 +8,20 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	SwitchNumber = 250;
+	PositionClose = 100; 
+	PositionFar = PositionClose-SwitchNumber;
+	MaxHealth = 2;
+	PlayerHealth = MaxHealth;
+	CryptPositionFar = 1450;
+	CryptPositionClose = CryptPositionFar+SwitchNumber;
+	EnteredCrypt = false;
+	CryptKeyDropped = false; 
+	HasSwitched = false;
+	WeaponCooldownOver = true;
+	WeaponCooldownTime = 0.5;
+	FMPlayerMesh = true; 
 
 }
 
