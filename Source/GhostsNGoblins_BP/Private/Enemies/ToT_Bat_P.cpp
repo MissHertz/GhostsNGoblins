@@ -83,6 +83,7 @@ void AToT_Bat_P::SetMovementPositions()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		}
+		this->Destroy();
 	}
 	
 }
