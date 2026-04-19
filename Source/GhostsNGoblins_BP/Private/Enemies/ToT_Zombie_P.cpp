@@ -99,46 +99,56 @@ void AToT_Zombie_P::SetMovementBox()
 
 void AToT_Zombie_P::SetMovementPositions()
 {
-	FVector ZombiePosition = this->GetActorLocation();
+	FVector ZombiePosition = GetActorLocation();
 	if (ZombiePosition.Y == 150)
 	{
-		MovementLane = 0; 
+		//MovementLane = 0; 
+		LanePositionY = 150;
 	}
 	else if (ZombiePosition.Y == -100)
 	{
-		MovementLane = 1;
+		//MovementLane = 1;
+		LanePositionY = -100;
 	}
 	else if (ZombiePosition.Y == 1700)
 	{
-		MovementLane = 2;
+		//MovementLane = 2;
+		LanePositionY = 1700;
 	}
 	else if (ZombiePosition.Y == 1450)
 	{
-		MovementLane = 3;
+		//MovementLane = 3;
+		LanePositionY = 1450;
 	}
 	else
 	{
-		MovementLane = 0; 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
+		}
 	}
+	// else
+	// {
+	// 	MovementLane = 0; 
+	// }
 	
-	switch (MovementLane)
-	{
-	case 0:
-		LanePositionY = 150;
-		break; 
-	case 1:
-		LanePositionY = -100;
-		break; 
-	case 2:
-		LanePositionY = 1700;
-		break; 
-	case 3:
-		LanePositionY = 1450; 
-		break;
-	default: 
-		LanePositionY = 150;
-		break; 
-	}
+	// switch (MovementLane)
+	// {
+	// case 0:
+	// 	LanePositionY = 150;
+	// 	break; 
+	// case 1:
+	// 	LanePositionY = -100;
+	// 	break; 
+	// case 2:
+	// 	LanePositionY = 1700;
+	// 	break; 
+	// case 3:
+	// 	LanePositionY = 1450; 
+	// 	break;
+	// default: 
+	// 	LanePositionY = 150;
+	// 	break; 
+	// }
 }
 
 void AToT_Zombie_P::AtDownGraveyard_Implementation()
