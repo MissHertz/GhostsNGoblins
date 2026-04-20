@@ -22,6 +22,7 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 	WeaponCooldownOver = true;
 	WeaponCooldownTime = 0.5;
 	FMPlayerMesh = true; 
+	LifeCounter = 2; 
 
 }
 
