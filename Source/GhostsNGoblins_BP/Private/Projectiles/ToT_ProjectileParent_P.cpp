@@ -18,6 +18,7 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
 	RootComponent = Projectile;
+	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->UpdatedComponent = Projectile;

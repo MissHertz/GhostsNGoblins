@@ -18,10 +18,10 @@ public:
 	AToT_ProjectileParent_P();
 	
 	// Properties of the actor
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* Projectile;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USphereComponent* CollisionSphere;
 	
 	UPROPERTY(EditAnywhere)
