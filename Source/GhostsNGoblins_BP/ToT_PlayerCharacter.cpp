@@ -23,6 +23,8 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 	WeaponCooldownTime = 0.5;
 	FMPlayerMesh = true; 
 	LifeCounter = 2; 
+	HoldsCryptKey = false;
+	BeatenSemiBoss = false; 
 
 }
 
