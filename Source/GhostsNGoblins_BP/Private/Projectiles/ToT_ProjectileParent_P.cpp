@@ -28,6 +28,8 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 void AToT_ProjectileParent_P::BeginPlay()
 {
 	Super::BeginPlay();
+	Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+
 	
 }
 

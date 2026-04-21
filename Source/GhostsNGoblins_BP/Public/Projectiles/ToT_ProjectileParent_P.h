@@ -47,6 +47,7 @@ public:
 	float ExsistanceTime;
 	
 	// Function for when the projectile hits the enemy
+	UFUNCTION()
 	void HitEnemy(UPrimitiveComponent* HitComponent, AActor* HitActor,
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
