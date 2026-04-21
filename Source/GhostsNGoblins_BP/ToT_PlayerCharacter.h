@@ -99,9 +99,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
 	bool EnteredCrypt;
 	
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
 	bool CryptKeyDropped;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
+    	bool HoldsCryptKey;
+    	
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
+    	bool BeatenSemiBoss;
 	
 
 };
