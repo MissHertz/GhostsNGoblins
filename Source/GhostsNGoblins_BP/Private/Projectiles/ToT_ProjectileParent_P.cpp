@@ -15,6 +15,12 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	
 	WeaponDamage = 20.f; 
 	ExsistanceTime = 2.f; 
+	
+	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
+	RootComponent = Projectile;
+	
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+	ProjectileMovement->UpdatedComponent = Projectile;
 }
 
 // Called when the game starts or when spawned

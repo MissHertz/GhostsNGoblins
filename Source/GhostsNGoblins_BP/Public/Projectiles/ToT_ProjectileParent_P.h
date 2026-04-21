@@ -19,7 +19,7 @@ public:
 	
 	// Properties of the actor
 	UPROPERTY(EditAnywhere)
-	UStaticMesh* Projectile;
+	UStaticMeshComponent* Projectile;
 	
 	UPROPERTY(EditAnywhere)
 	USphereComponent* CollisionSphere;
