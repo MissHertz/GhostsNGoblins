@@ -20,6 +20,9 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	RootComponent = Projectile;
 	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	
+	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
+	CollisionCapsule->SetRelativeRotation(FRotator(0.f, 90.f, 90.f));
+	
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->UpdatedComponent = Projectile;
 }
@@ -28,8 +31,9 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 void AToT_ProjectileParent_P::BeginPlay()
 {
 	Super::BeginPlay();
-	Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
-
+	//Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+	//Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+	Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 	
 }
 
@@ -44,12 +48,14 @@ void AToT_ProjectileParent_P::Tick(float DeltaTime)
 	}
 }
 
-void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* HitComponent, AActor* HitActor,
-	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (HitActor and EnemyBlueprint and HitActor->IsA(EnemyBlueprint))
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
+	if (OtherActor->IsA(EnemyBlueprint))
 	{
-		UGameplayStatics::ApplyDamage(HitActor, WeaponDamage, GetInstigatorController(), this, UDamageType::StaticClass());
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit enemy"));
+		UGameplayStatics::ApplyDamage(OtherActor, WeaponDamage, GetInstigatorController(), this, UDamageType::StaticClass());
 	}
 }
 
