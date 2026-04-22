@@ -84,7 +84,7 @@ void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* 
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
 			UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
-			EnemyHitCooldown = 2;
+			EnemyHitCooldown = 1;
 			JustHit = true; 
 		}
 	}
