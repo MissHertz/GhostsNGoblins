@@ -17,14 +17,20 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	ExsistanceTime = 2.f; 
 	
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
-	RootComponent = Projectile;
+	//RootComponent = Projectile;
 	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	
 	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
 	CollisionCapsule->SetRelativeRotation(FRotator(0.f, 90.f, 90.f));
+	CollisionCapsule->SetupAttachment(RootComponent);
+	
+	//RootComponent = CollisionCapsule;
 	
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->UpdatedComponent = Projectile;
+	
+	CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -33,8 +39,8 @@ void AToT_ProjectileParent_P::BeginPlay()
 	Super::BeginPlay();
 	//Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 	//Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
-	Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
-	
+	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Existing"));
 }
 
 // Called every frame
@@ -57,5 +63,11 @@ void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AAct
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit enemy"));
 		UGameplayStatics::ApplyDamage(OtherActor, WeaponDamage, GetInstigatorController(), this, UDamageType::StaticClass());
 	}
+}
+
+void AToT_ProjectileParent_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
 }
 
