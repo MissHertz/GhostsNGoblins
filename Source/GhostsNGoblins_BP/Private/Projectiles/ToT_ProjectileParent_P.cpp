@@ -21,7 +21,7 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	
 	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
-	CollisionCapsule->SetRelativeRotation(FRotator(0.f, 90.f, 90.f));
+	CollisionCapsule->SetRelativeRotation(FRotator(0.f, 0.f, 90.f));
 	CollisionCapsule->SetupAttachment(RootComponent);
 	
 	//RootComponent = CollisionCapsule;
