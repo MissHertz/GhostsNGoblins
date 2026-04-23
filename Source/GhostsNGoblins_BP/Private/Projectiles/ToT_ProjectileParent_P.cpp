@@ -17,7 +17,7 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	ExsistanceTime = 2.f; 
 	
 	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
-	//RootComponent = Projectile;
+	RootComponent = Projectile;
 	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	
 	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
@@ -27,10 +27,12 @@ AToT_ProjectileParent_P::AToT_ProjectileParent_P()
 	//RootComponent = CollisionCapsule;
 	
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	ProjectileMovement->UpdatedComponent = Projectile;
+	//ProjectileMovement->UpdatedComponent = Projectile;
+	ProjectileMovement->UpdatedComponent = RootComponent;
+	
 	
 	CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::OnOverlapBegin);
+	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 }
 
 // Called when the game starts or when spawned
@@ -39,7 +41,6 @@ void AToT_ProjectileParent_P::BeginPlay()
 	Super::BeginPlay();
 	//Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 	//Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
-	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Existing"));
 }
 
@@ -65,9 +66,4 @@ void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AAct
 	}
 }
 
-void AToT_ProjectileParent_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
-}
 
