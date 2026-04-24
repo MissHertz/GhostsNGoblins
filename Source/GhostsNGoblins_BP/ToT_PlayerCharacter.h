@@ -109,4 +109,20 @@ public:
     	bool BeatenSemiBoss;
 	
 
+	/*
+	 * Player movement
+	 */
+	
+	// UFUNCTION()
+	// void PlayerMoveRightLeft();
+	//
+	// UFUNCTION()
+	// void PlayerSwitchLaneOutW();
+	//
+	// UFUNCTION()
+	// void PlayerSwitchLaneInS();
+	//
+	// UFUNCTION()
+	// void PlayerJump();
+	
 };

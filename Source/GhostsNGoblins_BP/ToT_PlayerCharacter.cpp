@@ -33,6 +33,18 @@ void AToT_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
+		{
+			// UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer)
+			// {
+			// 	Subsystem->AddMappingContext
+			// }
+			
+		}
+	}
+	
 }
 
 // Called every frame
