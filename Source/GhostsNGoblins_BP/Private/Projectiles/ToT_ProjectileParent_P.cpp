@@ -1,0 +1,69 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Projectiles/ToT_ProjectileParent_P.h"
+
+#include "Enemies/ToT_EnemyParent_P.h"
+#include "Kismet/GameplayStatics.h"
+
+
+// Sets default values
+AToT_ProjectileParent_P::AToT_ProjectileParent_P()
+{
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+	
+	WeaponDamage = 20.f; 
+	ExsistanceTime = 2.f; 
+	
+	Projectile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile"));
+	RootComponent = Projectile;
+	Projectile->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
+	
+	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
+	CollisionCapsule->SetRelativeRotation(FRotator(0.f, 90.f, 90.f));
+	CollisionCapsule->SetupAttachment(RootComponent);
+	
+	//RootComponent = CollisionCapsule;
+	
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+	//ProjectileMovement->UpdatedComponent = Projectile;
+	ProjectileMovement->UpdatedComponent = RootComponent;
+	
+	
+	CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+}
+
+// Called when the game starts or when spawned
+void AToT_ProjectileParent_P::BeginPlay()
+{
+	Super::BeginPlay();
+	//Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+	//Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Existing"));
+}
+
+// Called every frame
+void AToT_ProjectileParent_P::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	ExsistanceTime -= DeltaTime; 
+	if (ExsistanceTime < 0)
+	{
+		this->Destroy();
+	}
+}
+
+void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
+	if (OtherActor->IsA(EnemyBlueprint))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit enemy"));
+		UGameplayStatics::ApplyDamage(OtherActor, WeaponDamage, GetInstigatorController(), this, UDamageType::StaticClass());
+	}
+}
+
+
