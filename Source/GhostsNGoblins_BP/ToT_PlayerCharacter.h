@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "ToT_PlayerCharacter.generated.h"
 
+class UInputAction;
+class UInputMappingContext;
+
 UCLASS()
 class GHOSTSNGOBLINS_BP_API AToT_PlayerCharacter : public ACharacter
 {
@@ -110,19 +113,33 @@ public:
 	
 
 	/*
-	 * Player movement
+	 * Player Controller
 	 */
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputMappingContext* MappingContext;
 	
-	// UFUNCTION()
-	// void PlayerMoveRightLeft();
-	//
-	// UFUNCTION()
-	// void PlayerSwitchLaneOutW();
-	//
-	// UFUNCTION()
-	// void PlayerSwitchLaneInS();
-	//
-	// UFUNCTION()
-	// void PlayerJump();
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* RightLeftMovement;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* SwitchLaneOutW;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* SwitchLaneInS;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* PlayerJumpAction;
+	
+	UFUNCTION()
+	void PlayerMoveRightLeft();
+	
+	UFUNCTION()
+	void PlayerSwitchLaneOutW();
+	
+	UFUNCTION()
+	void PlayerSwitchLaneInS();
+	
+	UFUNCTION()
+	void PlayerJump();
 	
 };

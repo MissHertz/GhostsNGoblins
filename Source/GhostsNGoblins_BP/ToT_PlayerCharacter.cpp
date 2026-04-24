@@ -2,6 +2,9 @@
 
 
 #include "ToT_PlayerCharacter.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+
 
 // Sets default values
 AToT_PlayerCharacter::AToT_PlayerCharacter()
@@ -37,10 +40,10 @@ void AToT_PlayerCharacter::BeginPlay()
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
 		{
-			// UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer)
-			// {
-			// 	Subsystem->AddMappingContext
-			// }
+			if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
+			{
+				Subsystem->AddMappingContext(MappingContext, 0);
+			}
 			
 		}
 	}
@@ -59,13 +62,43 @@ void AToT_PlayerCharacter::Tick(float DeltaTime)
 void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EnhancedInputComponent->BindAction(RightLeftMovement, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerMoveRightLeft);
+		EnhancedInputComponent->BindAction(SwitchLaneOutW, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerSwitchLaneOutW);
+		EnhancedInputComponent->BindAction(SwitchLaneInS, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerSwitchLaneInS);
+		EnhancedInputComponent->BindAction(PlayerJumpAction, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerJump);
+	}
 
 }
 
+// Currently not 
 void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReference)
 {
 	FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 	
 	
+}
+
+// Player moving right and left along the lane
+void AToT_PlayerCharacter::PlayerMoveRightLeft()
+{
+}
+
+// Player switching lane out (Further away from the camera)
+void AToT_PlayerCharacter::PlayerSwitchLaneOutW()
+{
+}
+
+// Player switching lane in (Closer to the camera)
+void AToT_PlayerCharacter::PlayerSwitchLaneInS()
+{
+}
+
+// Player jumping
+void AToT_PlayerCharacter::PlayerJump()
+{
+	Jump();
 }
 
