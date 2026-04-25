@@ -20,6 +20,8 @@ AToT_Zombie_P::AToT_Zombie_P()
 	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin);
 	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
+	
+	ZombiesToKill = 3;
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +30,7 @@ void AToT_Zombie_P::BeginPlay()
 	Super::BeginPlay();
 	SetMovementPositions();
 	SetMovementBox();
+	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 	
 }
 
@@ -64,13 +67,35 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 			// 	if (Actor.)
 			// }
 			
-			// Spawning key, currently every zombie does this
-			FVector ZombieLocation = this->GetActorLocation();
-			FRotator Rotation = FRotator(0, 0, 0);
-			FActorSpawnParameters SpawnParameters;
-			GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
-			this->Destroy();
+			//AToT_PlayerCharacter* PlayerCharacter = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+			if (Player)
+			{
+				if (Player->ZombiesKilled < ZombiesToKill)
+				{
+					Player->ZombiesKilled += 1;
+					this->Destroy();
+				}
+				else
+				{
+					if (Player->CryptKeyDropped)
+					{
+						this->Destroy();
+					}
+					else
+					{
+						FVector ZombieLocation = this->GetActorLocation();
+						FRotator Rotation = FRotator(0, 0, 0);
+						FActorSpawnParameters SpawnParameters;
+						GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
+						Player->CryptKeyDropped = true;
+						this->Destroy();
+					}
+				}
+			}
+			else
+			{
+				this->Destroy();	
+			}
 		}
 	}
 }

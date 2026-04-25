@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ToT_EnemyParent_P.h"
 #include "Components/BoxComponent.h"
+#include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "MovementBlocks/ToT_MovementBlocks_P.h"
 #include "ToT_Zombie_P.generated.h"
 
@@ -76,4 +77,14 @@ public:
 	   const FHitResult& SweepResult
    );
 	
+	/*
+	 * Get player
+	 */
+	AToT_PlayerCharacter* Player;
+	
+	/*
+	 * Zombie's own variables
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
+	int ZombiesToKill;
 };

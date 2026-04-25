@@ -113,6 +113,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
     	bool BeatenSemiBoss;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
+	int ZombiesKilled; 
+	
 
 	/*
 	 * Player Controller

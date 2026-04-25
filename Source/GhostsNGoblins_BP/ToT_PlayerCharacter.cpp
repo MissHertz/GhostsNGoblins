@@ -33,6 +33,7 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 	LifeCounter = 2; 
 	HoldsCryptKey = false;
 	BeatenSemiBoss = false; 
+	ZombiesKilled = 0;
 	
 	
 
