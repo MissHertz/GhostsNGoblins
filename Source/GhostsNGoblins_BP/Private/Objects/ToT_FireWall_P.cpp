@@ -18,10 +18,9 @@ AToT_FireWall_P::AToT_FireWall_P()
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	FVector CollisionBoxLocation = FVector(295.f, 0.f, 220.f);
 	CollisionBox->SetRelativeLocation(CollisionBoxLocation);
-	FVector CollisionBoxTransform = FVector(0.2, 5.f, 3.f);
-	CollisionBox->SetRelativeScale3D(CollisionBoxTransform);
 	
 	RootComponent = Firewall;
+	CollisionBox->SetupAttachment(RootComponent);
 	
 	FirewallTimeline = CreateDefaultSubobject<UTimelineComponent>(TEXT("FirewallTimeline"));
 	
