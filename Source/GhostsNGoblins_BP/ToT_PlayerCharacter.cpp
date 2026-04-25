@@ -73,7 +73,7 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 }
 
-// Currently not 
+// Currently not in use
 void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReference)
 {
 	FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
@@ -82,8 +82,18 @@ void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReferen
 }
 
 // Player moving right and left along the lane
-void AToT_PlayerCharacter::PlayerMoveRightLeft()
+void AToT_PlayerCharacter::PlayerMoveRightLeft(const FInputActionValue& ActionValue)
 {
+	FVector2D MovementVector = ActionValue.Get<FVector2D>();
+	
+	// Setting the movement input for the player
+	AddMovementInput(GetActorForwardVector(), MovementVector.X, false);
+	
+	// Setting the mesh rotation as the actor does not do it itself
+	USkeletalMeshComponent* PlayerMesh = this->GetMesh();
+	
+	FRotator MeshRotation = FRotator(0, MovementVector.X*-90, 0);
+	PlayerMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::None);
 }
 
 // Player switching lane out (Further away from the camera)

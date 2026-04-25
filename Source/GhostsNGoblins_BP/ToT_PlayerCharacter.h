@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ToT_PlayerCharacter.generated.h"
 
+struct FInputActionValue;
 class UInputAction;
 class UInputMappingContext;
 
@@ -131,7 +132,7 @@ public:
 	UInputAction* PlayerJumpAction;
 	
 	UFUNCTION()
-	void PlayerMoveRightLeft();
+	void PlayerMoveRightLeft(const FInputActionValue& ActionValue);
 	
 	UFUNCTION()
 	void PlayerSwitchLaneOutW();
