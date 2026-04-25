@@ -87,4 +87,5 @@ public:
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
 	int ZombiesToKill;
+	
 };
