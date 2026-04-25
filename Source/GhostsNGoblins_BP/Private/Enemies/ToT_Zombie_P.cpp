@@ -116,7 +116,7 @@ void AToT_Zombie_P::SetMovementBox()
 	{
 		if (OverlappingActor->GetClass()->ImplementsInterface(UToT_EnemyInMovementBlock::StaticClass()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
 			IToT_EnemyInMovementBlock::Execute_EnemyInMovementBlock(OverlappingActor, this);
 		}
 	}
@@ -150,29 +150,7 @@ void AToT_Zombie_P::SetMovementPositions()
 		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		this->Destroy();	
 	}
-	// else
-	// {
-	// 	MovementLane = 0; 
-	// }
-	
-	// switch (MovementLane)
-	// {
-	// case 0:
-	// 	LanePositionY = 150;
-	// 	break; 
-	// case 1:
-	// 	LanePositionY = -100;
-	// 	break; 
-	// case 2:
-	// 	LanePositionY = 1700;
-	// 	break; 
-	// case 3:
-	// 	LanePositionY = 1450; 
-	// 	break;
-	// default: 
-	// 	LanePositionY = 150;
-	// 	break; 
-	// }
+
 }
 
 void AToT_Zombie_P::AtDownGraveyard_Implementation()
@@ -203,7 +181,7 @@ void AToT_Zombie_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 4070.f;
+	EnemyGoalPatrolLeft = 5000.f;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 

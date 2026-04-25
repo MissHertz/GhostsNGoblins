@@ -41,7 +41,7 @@ void AToT_ProjectileParent_P::BeginPlay()
 	Super::BeginPlay();
 	//Projectile->OnComponentHit.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
 	//Projectile->OnComponentBeginOverlap.AddDynamic(this, &AToT_ProjectileParent_P::HitEnemy);
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Existing"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Existing"));
 }
 
 // Called every frame
@@ -58,7 +58,7 @@ void AToT_ProjectileParent_P::Tick(float DeltaTime)
 void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something"));
 	if (OtherActor->IsA(EnemyBlueprint))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit enemy"));

@@ -138,7 +138,7 @@ void AToT_Bat_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 4070.f;
+	EnemyGoalPatrolLeft = 5000.f;
 	MovementPosZ = -1700;
 }
 
