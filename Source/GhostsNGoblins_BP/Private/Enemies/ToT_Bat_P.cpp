@@ -81,7 +81,7 @@ void AToT_Bat_P::SetMovementPositions()
 	else
 	{
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		}
 		this->Destroy();
 	}
@@ -103,7 +103,7 @@ void AToT_Bat_P::SetMovementBlocks()
 	{
 		if (OverlappingActor->GetClass()->ImplementsInterface(UToT_EnemyInMovementBlock::StaticClass()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
 			IToT_EnemyInMovementBlock::Execute_EnemyInMovementBlock(OverlappingActor, this);
 		}
 	}

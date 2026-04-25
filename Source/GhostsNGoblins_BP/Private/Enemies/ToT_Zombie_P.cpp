@@ -147,7 +147,7 @@ void AToT_Zombie_P::SetMovementPositions()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		this->Destroy();	
 	}
 	// else
@@ -180,7 +180,7 @@ void AToT_Zombie_P::AtDownGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();
 	EnemyGoalPatrolRight = 8090.f;
 	EnemyGoalPatrolLeft = 3570.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtUpperGraveyard_Implementation()
@@ -188,7 +188,7 @@ void AToT_Zombie_P::AtUpperGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtUpperGraveyard_Implementation();
 	EnemyGoalPatrolRight = 13600.f;
 	EnemyGoalPatrolLeft = 8800.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptGraveyard_Implementation()
@@ -196,7 +196,7 @@ void AToT_Zombie_P::AtCryptGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtCryptGraveyard_Implementation();
 	EnemyGoalPatrolRight = 16050.f;
 	EnemyGoalPatrolLeft = 14450.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptStart_Implementation()
@@ -204,7 +204,7 @@ void AToT_Zombie_P::AtCryptStart_Implementation()
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
 	EnemyGoalPatrolLeft = 4070.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptMiddle_Implementation()
@@ -212,7 +212,7 @@ void AToT_Zombie_P::AtCryptMiddle_Implementation()
 	IToT_MovementBlocks_P::AtCryptMiddle_Implementation();
 	EnemyGoalPatrolRight = 10850.f;
 	EnemyGoalPatrolLeft = 7830.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptEnd_Implementation()
@@ -220,7 +220,7 @@ void AToT_Zombie_P::AtCryptEnd_Implementation()
 	IToT_MovementBlocks_P::AtCryptEnd_Implementation();
 	EnemyGoalPatrolRight = 14030.f;
 	EnemyGoalPatrolLeft = 12530.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
