@@ -12,6 +12,11 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+	// Creating timelines
+	SwitchInTimelineS = CreateDefaultSubobject<UTimelineComponent>(TEXT("Switch In Timeline"));
+	SwitchOutTimelineW = CreateDefaultSubobject<UTimelineComponent>(TEXT("Switch Out Timeline"));
+	
+	// Setting variables
 	SwitchNumber = 250;
 	PositionClose = 100; 
 	PositionFar = PositionClose-SwitchNumber;
@@ -28,6 +33,8 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 	LifeCounter = 2; 
 	HoldsCryptKey = false;
 	BeatenSemiBoss = false; 
+	
+	
 
 }
 
@@ -46,6 +53,39 @@ void AToT_PlayerCharacter::BeginPlay()
 			}
 			
 		}
+	}
+	
+	// Binding the timelines
+	SwitchInDelegate.BindDynamic(this, &AToT_PlayerCharacter::SwitchInUpdate);
+	SwitchInOver.BindDynamic(this, &AToT_PlayerCharacter::SwitchInFinished);
+	
+	if (SwitchInCurveS)
+	{
+		//FOnTimelineFloat SwitchInDelegate;
+		//SwitchInDelegate.BindUFunction(this, FName("UpdatedInSwitch"));
+		
+		//FOnTimelineEvent SwitchInFinished;
+		//SwitchInOver.BindUFunction(this, FName("FinishedInSwitch"));
+		
+		SwitchInTimelineS->AddInterpFloat(SwitchInCurveS, SwitchInDelegate);
+		SwitchInTimelineS->SetTimelineFinishedFunc(SwitchInOver);
+		//SwitchInTimelineS->SetLooping(false);
+	}
+	
+	SwitchOutDelegate.BindDynamic(this, &AToT_PlayerCharacter::SwitchOutUpdate);
+	SwitchOutOver.BindDynamic(this, &AToT_PlayerCharacter::SwitchOutFinished);
+	
+	if (SwitchOutCurveW)
+	{
+		//FOnTimelineFloat SwitchOutDelegate;
+		//SwitchOutDelegate.BindUFunction(this, FName("UpdatedOutSwitch"));
+		
+		//FOnTimelineEvent SwitchOutFinished;
+		//SwitchOutFinished.BindUFunction(this, FName("FinishedOutSwitch"));
+		
+		SwitchOutTimelineW->AddInterpFloat(SwitchOutCurveW, SwitchOutDelegate);
+		SwitchOutTimelineW->SetTimelineFinishedFunc(SwitchOutOver);
+		//SwitchOutTimelineW->SetLooping(false);
 	}
 	
 }
@@ -77,8 +117,78 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReference)
 {
 	FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+}
+
+// Switching in timeline (closer to the camera)
+void AToT_PlayerCharacter::SwitchInUpdate(float InValue)
+{
+	FVector TargetLocation = FVector(0.f, 0.f, 0.f); 
+	if (EnteredCrypt == false)
+	{
+		float NewYPosition = PositionFar + InValue;
+		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
+	}
+	else if (EnteredCrypt == true)
+	{
+		float NewYPosition = CryptPositionFar + InValue;
+		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
+	}
 	
+	this->SetActorLocation(TargetLocation, true);
+}
+
+// Switching in (closer to the camera) finished
+void AToT_PlayerCharacter::SwitchInFinished()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("In Movement finished"));
 	
+	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
+	if (EnteredCrypt == false)
+	{
+		ActorLocation = FVector(GetActorLocation().X, PositionClose, GetActorLocation().Z);
+	}
+	else if (EnteredCrypt == true)
+	{
+		ActorLocation = FVector(GetActorLocation().X, CryptPositionClose, GetActorLocation().Z);
+	}
+	this->SetActorLocation(ActorLocation, true);
+	HasSwitched = false; 
+}
+
+// Switching out timeline during update (further from the camera)
+void AToT_PlayerCharacter::SwitchOutUpdate(float InValue)
+{
+	FVector TargetLocation = FVector(0.f, 0.f, 0.f); 
+	if (EnteredCrypt == false)
+	{
+		float NewYPosition = PositionClose - InValue;
+		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
+	}
+	else if (EnteredCrypt == true)
+	{
+		float NewYPosition = CryptPositionClose - InValue;
+		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
+	}
+	
+	this->SetActorLocation(TargetLocation, true);
+}
+
+// Switching out(further from the camera) finished
+void AToT_PlayerCharacter::SwitchOutFinished()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Out Movement finished"));
+	
+	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
+	if (EnteredCrypt == false)
+	{
+		ActorLocation = FVector(GetActorLocation().X, PositionFar, GetActorLocation().Z);
+	}
+	else if (EnteredCrypt == true)
+	{
+		ActorLocation = FVector(GetActorLocation().X, CryptPositionFar, GetActorLocation().Z);
+	}
+	this->SetActorLocation(ActorLocation, true);
+	HasSwitched = true; 
 }
 
 // Player moving right and left along the lane
@@ -104,6 +214,13 @@ void AToT_PlayerCharacter::PlayerSwitchLaneOutW()
 // Player switching lane in (Closer to the camera)
 void AToT_PlayerCharacter::PlayerSwitchLaneInS()
 {
+	if (HasSwitched == true)
+	{
+		if (SwitchInTimelineS)
+		{
+			SwitchInTimelineS->PlayFromStart();
+		}
+	}
 }
 
 // Player jumping

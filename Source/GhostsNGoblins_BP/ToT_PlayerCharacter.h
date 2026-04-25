@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/TimelineComponent.h"
 #include "GameFramework/Character.h"
 #include "ToT_PlayerCharacter.generated.h"
 
@@ -131,6 +132,39 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Controller")
 	UInputAction* PlayerJumpAction;
 	
+	// Timelines for the controller
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UTimelineComponent* SwitchInTimelineS; 
+	
+	FOnTimelineFloat SwitchInDelegate;
+	FOnTimelineEvent SwitchInOver;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller Timelines")
+	UCurveFloat* SwitchInCurveS;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UTimelineComponent* SwitchOutTimelineW;
+	
+	FOnTimelineFloat SwitchOutDelegate;
+	FOnTimelineEvent SwitchOutOver;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller Timelines")
+	UCurveFloat* SwitchOutCurveW;
+	
+	UFUNCTION()
+	void SwitchInUpdate(float InValue);
+	
+	UFUNCTION()
+	void SwitchInFinished();
+	
+	UFUNCTION()
+	void SwitchOutUpdate(float InValue);
+	
+	UFUNCTION()
+	void SwitchOutFinished();
+	
+	// Controller functions
 	UFUNCTION()
 	void PlayerMoveRightLeft(const FInputActionValue& ActionValue);
 	
