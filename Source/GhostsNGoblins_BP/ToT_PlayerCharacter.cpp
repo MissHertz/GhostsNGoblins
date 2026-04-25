@@ -18,7 +18,7 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
 	
 	// Setting variables
 	SwitchNumber = 250;
-	PositionClose = 100; 
+	PositionClose = 150; 
 	PositionFar = PositionClose-SwitchNumber;
 	MaxHealth = 2;
 	PlayerHealth = MaxHealth;
@@ -51,25 +51,17 @@ void AToT_PlayerCharacter::BeginPlay()
 			{
 				Subsystem->AddMappingContext(MappingContext, 0);
 			}
-			
 		}
 	}
 	
-	// Binding the timelines
+	// Binding the timelines to a function
 	SwitchInDelegate.BindDynamic(this, &AToT_PlayerCharacter::SwitchInUpdate);
 	SwitchInOver.BindDynamic(this, &AToT_PlayerCharacter::SwitchInFinished);
 	
 	if (SwitchInCurveS)
 	{
-		//FOnTimelineFloat SwitchInDelegate;
-		//SwitchInDelegate.BindUFunction(this, FName("UpdatedInSwitch"));
-		
-		//FOnTimelineEvent SwitchInFinished;
-		//SwitchInOver.BindUFunction(this, FName("FinishedInSwitch"));
-		
 		SwitchInTimelineS->AddInterpFloat(SwitchInCurveS, SwitchInDelegate);
 		SwitchInTimelineS->SetTimelineFinishedFunc(SwitchInOver);
-		//SwitchInTimelineS->SetLooping(false);
 	}
 	
 	SwitchOutDelegate.BindDynamic(this, &AToT_PlayerCharacter::SwitchOutUpdate);
@@ -77,15 +69,8 @@ void AToT_PlayerCharacter::BeginPlay()
 	
 	if (SwitchOutCurveW)
 	{
-		//FOnTimelineFloat SwitchOutDelegate;
-		//SwitchOutDelegate.BindUFunction(this, FName("UpdatedOutSwitch"));
-		
-		//FOnTimelineEvent SwitchOutFinished;
-		//SwitchOutFinished.BindUFunction(this, FName("FinishedOutSwitch"));
-		
 		SwitchOutTimelineW->AddInterpFloat(SwitchOutCurveW, SwitchOutDelegate);
 		SwitchOutTimelineW->SetTimelineFinishedFunc(SwitchOutOver);
-		//SwitchOutTimelineW->SetLooping(false);
 	}
 	
 }
@@ -103,6 +88,7 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
+	// Binding the input to a function
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(RightLeftMovement, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerMoveRightLeft);
@@ -134,7 +120,7 @@ void AToT_PlayerCharacter::SwitchInUpdate(float InValue)
 		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
 	}
 	
-	this->SetActorLocation(TargetLocation, true);
+	this->SetActorLocation(TargetLocation, false);
 }
 
 // Switching in (closer to the camera) finished
@@ -151,7 +137,7 @@ void AToT_PlayerCharacter::SwitchInFinished()
 	{
 		ActorLocation = FVector(GetActorLocation().X, CryptPositionClose, GetActorLocation().Z);
 	}
-	this->SetActorLocation(ActorLocation, true);
+	this->SetActorLocation(ActorLocation, false);
 	HasSwitched = false; 
 }
 
@@ -170,7 +156,7 @@ void AToT_PlayerCharacter::SwitchOutUpdate(float InValue)
 		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
 	}
 	
-	this->SetActorLocation(TargetLocation, true);
+	this->SetActorLocation(TargetLocation, false);
 }
 
 // Switching out(further from the camera) finished
@@ -187,7 +173,7 @@ void AToT_PlayerCharacter::SwitchOutFinished()
 	{
 		ActorLocation = FVector(GetActorLocation().X, CryptPositionFar, GetActorLocation().Z);
 	}
-	this->SetActorLocation(ActorLocation, true);
+	this->SetActorLocation(ActorLocation, false);
 	HasSwitched = true; 
 }
 
@@ -209,6 +195,13 @@ void AToT_PlayerCharacter::PlayerMoveRightLeft(const FInputActionValue& ActionVa
 // Player switching lane out (Further away from the camera)
 void AToT_PlayerCharacter::PlayerSwitchLaneOutW()
 {
+	if (HasSwitched == false)
+	{
+		if (SwitchOutTimelineW)
+		{
+			SwitchOutTimelineW->PlayFromStart();
+		}
+	}
 }
 
 // Player switching lane in (Closer to the camera)
