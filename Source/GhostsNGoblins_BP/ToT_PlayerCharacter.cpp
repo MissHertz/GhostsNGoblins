@@ -12,26 +12,32 @@ AToT_PlayerCharacter::AToT_PlayerCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	// Creating timelines
+	// Creating the two timelines
 	SwitchInTimelineS = CreateDefaultSubobject<UTimelineComponent>(TEXT("Switch In Timeline"));
 	SwitchOutTimelineW = CreateDefaultSubobject<UTimelineComponent>(TEXT("Switch Out Timeline"));
 	
-	// Setting variables
+	// Setting default value of variables
+	// Movement
 	SwitchNumber = 250;
 	PositionClose = 150; 
 	PositionFar = PositionClose-SwitchNumber;
-	MaxHealth = 2;
-	PlayerHealth = MaxHealth;
 	CryptPositionFar = 1450;
 	CryptPositionClose = CryptPositionFar+SwitchNumber;
+	HasSwitched = false;
+	// Health
+	MaxHealth = 2;
+	PlayerHealth = MaxHealth;
+	LifeCounter = 2; 
+	// Interactables
 	EnteredCrypt = false;
 	CryptKeyDropped = false; 
-	HasSwitched = false;
+	HoldsCryptKey = false;
+	// Weapons
 	WeaponCooldownOver = true;
 	WeaponCooldownTime = 0.5;
+	// Actor
 	FMPlayerMesh = true; 
-	LifeCounter = 2; 
-	HoldsCryptKey = false;
+	// Enemies
 	BeatenSemiBoss = false; 
 	ZombiesKilled = 0;
 	
@@ -44,6 +50,7 @@ void AToT_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Checking if the player controller is valid and binding it to the player
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
@@ -81,7 +88,6 @@ void AToT_PlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-
 }
 
 // Called to bind functionality to input
@@ -89,7 +95,7 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
-	// Binding the input to a function
+	// Binding the controller input to a function
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(RightLeftMovement, ETriggerEvent::Triggered, this, &AToT_PlayerCharacter::PlayerMoveRightLeft);
@@ -109,7 +115,10 @@ void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReferen
 // Switching in timeline (closer to the camera)
 void AToT_PlayerCharacter::SwitchInUpdate(float InValue)
 {
+	// Creating a new location for the player to move
 	FVector TargetLocation = FVector(0.f, 0.f, 0.f); 
+	
+	// Checking if the player has entered the crypt or not, sets the new value based on that
 	if (EnteredCrypt == false)
 	{
 		float NewYPosition = PositionFar + InValue;
@@ -121,6 +130,7 @@ void AToT_PlayerCharacter::SwitchInUpdate(float InValue)
 		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
 	}
 	
+	// Moving the player to the new location found
 	this->SetActorLocation(TargetLocation, false);
 }
 
@@ -129,6 +139,7 @@ void AToT_PlayerCharacter::SwitchInFinished()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("In Movement finished"));
 	
+	// Creating a new location for the player to move
 	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
 	if (EnteredCrypt == false)
 	{
@@ -138,14 +149,21 @@ void AToT_PlayerCharacter::SwitchInFinished()
 	{
 		ActorLocation = FVector(GetActorLocation().X, CryptPositionClose, GetActorLocation().Z);
 	}
+	
+	// Setting the new player location, is only a safety measure in case timeline fails
 	this->SetActorLocation(ActorLocation, false);
+	
+	// Sets the has switched to false as the player is in the closest lane
 	HasSwitched = false; 
 }
 
 // Switching out timeline during update (further from the camera)
 void AToT_PlayerCharacter::SwitchOutUpdate(float InValue)
 {
+	// Creating a new location for the player to move
 	FVector TargetLocation = FVector(0.f, 0.f, 0.f); 
+	
+	// Checking if the player has entered the crypt or not, sets the new value based on that
 	if (EnteredCrypt == false)
 	{
 		float NewYPosition = PositionClose - InValue;
@@ -157,6 +175,7 @@ void AToT_PlayerCharacter::SwitchOutUpdate(float InValue)
 		TargetLocation = FVector(GetActorLocation().X, NewYPosition, GetActorLocation().Z);
 	}
 	
+	// Moving the player to the new location found
 	this->SetActorLocation(TargetLocation, false);
 }
 
@@ -165,6 +184,7 @@ void AToT_PlayerCharacter::SwitchOutFinished()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Out Movement finished"));
 	
+	// Creating a new location for the player to move
 	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
 	if (EnteredCrypt == false)
 	{
@@ -174,6 +194,7 @@ void AToT_PlayerCharacter::SwitchOutFinished()
 	{
 		ActorLocation = FVector(GetActorLocation().X, CryptPositionFar, GetActorLocation().Z);
 	}
+	// Setting the new player location, is only a safety measure in case timeline fails for any reason
 	this->SetActorLocation(ActorLocation, false);
 	HasSwitched = true; 
 }

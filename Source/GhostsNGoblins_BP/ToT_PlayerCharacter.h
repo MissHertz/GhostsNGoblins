@@ -136,7 +136,6 @@ public:
 	UInputAction* PlayerJumpAction;
 	
 	// Timelines for the controller
-	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UTimelineComponent* SwitchInTimelineS; 
 	
@@ -155,6 +154,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Controller Timelines")
 	UCurveFloat* SwitchOutCurveW;
 	
+	// Functions for the timelines
 	UFUNCTION()
 	void SwitchInUpdate(float InValue);
 	
