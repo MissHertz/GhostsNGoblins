@@ -17,6 +17,10 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AToT_MovementBlock_P::OnOverlapEnd);
 	
 	PlayerInBox = false; 
+	EnemySpawnTime = 3;
+	EnemySpawnCooldown = 3;
+	EnemySpawnRange = 2; 
+	DelaySpawnTimer = 2.f;
 	
 }
 
@@ -135,7 +139,7 @@ void AToT_MovementBlock_P::SpawnBat()
 {
 	if (Player == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa"));
 		return;
 	} 
 	

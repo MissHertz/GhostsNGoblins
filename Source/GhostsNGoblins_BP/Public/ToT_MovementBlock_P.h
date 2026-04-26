@@ -71,19 +71,16 @@ public:
 	void SpawnBat();
 	
 	UPROPERTY(EditAnywhere, Category="Spawner")
-	float EnemySpawnTime = 3;
+	float EnemySpawnTime;
 	
 	UPROPERTY()
-	float EnemySpawnCooldown = 3;
+	float EnemySpawnCooldown;
 	
 	UPROPERTY(EditAnywhere, Category="Spawner")
-	int EnemySpawn;
+	int EnemySpawnRange; 
 	
 	UPROPERTY(EditAnywhere, Category="Spawner")
-	int EnemySpawnRange = 2; 
-	
-	UPROPERTY(EditAnywhere, Category="Spawner")
-	float DelaySpawnTimer = 2.f; 
+	float DelaySpawnTimer; 
 	
 	UPROPERTY(EditAnywhere, Category="Spawn Actors")
 	UClass* Zombie;

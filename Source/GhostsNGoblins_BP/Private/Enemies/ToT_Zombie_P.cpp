@@ -3,7 +3,6 @@
 
 #include "Enemies/ToT_Zombie_P.h"
 
-#include "StaticMeshSceneProxy.h"
 #include "ToT_MovementBlock_P.h"
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
@@ -17,10 +16,12 @@ AToT_Zombie_P::AToT_Zombie_P()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin);
+	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin); // Commented out as the function is not yet in use
 	
+	// Binding the taking damage to the taking damage function
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
 	
+	// Presetting the variable
 	ZombiesToKill = 3;
 }
 
@@ -28,8 +29,13 @@ AToT_Zombie_P::AToT_Zombie_P()
 void AToT_Zombie_P::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Setting the lane the enemy moves along
 	SetMovementPositions();
+	// Finding the overlapping movement box and setting the movement variables based on it
 	SetMovementBox();
+	
+	// Casting to the player controller to be able to get the player and use the variables for the player
 	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 	
 }
@@ -39,8 +45,6 @@ void AToT_Zombie_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	//GetMesh()->OnComponentHit.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
-	
 }
 
 // Called to bind functionality to input
@@ -49,27 +53,28 @@ void AToT_Zombie_P::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+// Enemy taking damage dunction
 void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
 	
+	// Checks if the health is above zero
 	if (CurrentHealth > 0)
 	{
+		// Subtracting the damage from the healt
 		CurrentHealth -= Damage; 
 		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
+		
+		// Playing the hit anitmation
 		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
+		
+		// Checks if the enemy is dead after taking the damage, destroying the actor if it is
 		if (CurrentHealth <= 0)
 		{
-			// TArray<AActor*> Actors;
-			// UGameplayStatics::GetAllActorsOfClass(GetWorld(), AToT_PlayerCharacter::StaticClass(), Actors);
-			// for (AActor* Actor : Actors)
-			// {
-			// 	if (Actor.)
-			// }
-			
-			//AToT_PlayerCharacter* PlayerCharacter = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+			// Checks that the player is valid to be able to get the values
 			if (Player)
 			{
+				// Checks if enough zombies has been killed to be able to spawn a key
 				if (Player->ZombiesKilled < ZombiesToKill)
 				{
 					Player->ZombiesKilled += 1;
@@ -77,21 +82,30 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 				}
 				else
 				{
+					// Checks if the key has been dropped already or not
 					if (Player->CryptKeyDropped)
 					{
 						this->Destroy();
 					}
+					// Spawning key if enough zombies have been killed
 					else
 					{
 						FVector ZombieLocation = this->GetActorLocation();
 						FRotator Rotation = FRotator(0, 0, 0);
 						FActorSpawnParameters SpawnParameters;
+						
+						// Spawning key at the zombies location
 						GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
+						
+						// Telling the player the key is dropped
 						Player->CryptKeyDropped = true;
+						
+						// Destroying the actor
 						this->Destroy();
 					}
 				}
 			}
+			// Still destroying and killing the zombie if the player is not valid
 			else
 			{
 				this->Destroy();	
@@ -122,27 +136,27 @@ void AToT_Zombie_P::SetMovementBox()
 	}
 }
 
+// Setting the lane the zombie moves in, destroys the character if it cannot find a "valid" lane
 void AToT_Zombie_P::SetMovementPositions()
 {
+	// Getting the Zombie's location
 	FVector ZombiePosition = GetActorLocation();
+	
+	// Setting the lane based on the position they have
 	if (ZombiePosition.Y == 150)
 	{
-		//MovementLane = 0; 
 		LanePositionY = 150;
 	}
 	else if (ZombiePosition.Y == -100)
 	{
-		//MovementLane = 1;
 		LanePositionY = -100;
 	}
 	else if (ZombiePosition.Y == 1700)
 	{
-		//MovementLane = 2;
 		LanePositionY = 1700;
 	}
 	else if (ZombiePosition.Y == 1450)
 	{
-		//MovementLane = 3;
 		LanePositionY = 1450;
 	}
 	else
@@ -152,6 +166,10 @@ void AToT_Zombie_P::SetMovementPositions()
 	}
 
 }
+
+/*
+ * Getting the interface message and setting the patrol locations based on that
+ */ 
 
 void AToT_Zombie_P::AtDownGraveyard_Implementation()
 {
@@ -201,6 +219,7 @@ void AToT_Zombie_P::AtCryptEnd_Implementation()
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
+// Currently not in use
 void AToT_Zombie_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

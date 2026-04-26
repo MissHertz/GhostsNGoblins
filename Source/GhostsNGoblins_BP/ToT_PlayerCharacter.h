@@ -34,7 +34,7 @@ public:
 	void HandleCameraSplineMovement(AActor CameraSplineReference);
 	
 	/*
-	 * Setting all(most) variables
+	 * Creating the player variables
 	 */
 	
 	// Movement
@@ -120,6 +120,8 @@ public:
 	/*
 	 * Player Controller
 	 */
+	
+	// Getting the mapping context for the controller inputs
 	UPROPERTY(EditAnywhere, Category = "Controller")
 	UInputMappingContext* MappingContext;
 	
