@@ -36,7 +36,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	// Reference to the Enemy blueprint (not the enemy directly)
+	// Reference to the Enemy blueprint class (not the enemy directly)
 	UPROPERTY(EditAnywhere, Category = "Enemy")
 	TSubclassOf<ACharacter> EnemyBlueprint;
 	
