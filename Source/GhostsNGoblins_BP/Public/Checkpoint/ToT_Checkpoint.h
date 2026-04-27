@@ -4,23 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Checkpoints.generated.h"
+#include "ToT_Checkpoint.generated.h"
 
 UCLASS()
-class GHOSTSNGOBLINS_BP_API ACheckpoints : public AActor
+class GHOSTSNGOBLINS_BP_API AToT_Checkpoint : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
-	ACheckpoints();
+	AToT_Checkpoint();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };
