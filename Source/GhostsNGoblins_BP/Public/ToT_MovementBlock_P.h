@@ -73,6 +73,9 @@ public:
 	UPROPERTY(EditAnywhere, Category="Spawner")
 	float EnemySpawnTime = 3;
 	
+	UPROPERTY()
+	float EnemySpawnCooldown = 3;
+	
 	UPROPERTY(EditAnywhere, Category="Spawner")
 	int EnemySpawn;
 	

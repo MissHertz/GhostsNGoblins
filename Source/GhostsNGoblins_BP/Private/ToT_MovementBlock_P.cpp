@@ -45,7 +45,7 @@ void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	{
 		PlayerInBox = true;
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player entered box"));
-		EnemySpawnTime = 5; 
+		EnemySpawnCooldown = EnemySpawnTime; 
 	}
 }
 
@@ -68,14 +68,14 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 	if (PlayerInBox == true)
 	{
 		// Has time pass to avoid enemies spawning all the time (basically a buffer)
-		EnemySpawnTime -= DeltaTime; 
+		EnemySpawnCooldown -= DeltaTime; 
 		
-		if (EnemySpawnTime <= 0)
+		if (EnemySpawnCooldown <= 0)
 		{
 			
-			int randomInteger = FMath::RandHelper(EnemySpawnRange);
+			int RandomInteger = FMath::RandHelper(EnemySpawnRange);
 			
-			switch (randomInteger)
+			switch (RandomInteger)
 			{
 			case 0: 
 				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE"));
@@ -93,7 +93,7 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 			// Debug message
 			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy"));
 			
-			EnemySpawnTime = 5;
+			EnemySpawnCooldown = EnemySpawnTime;
 		}
 	}
 }

@@ -20,6 +20,8 @@ AToT_Zombie_P::AToT_Zombie_P()
 	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin);
 	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
+	
+	ZombiesToKill = 3;
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +30,7 @@ void AToT_Zombie_P::BeginPlay()
 	Super::BeginPlay();
 	SetMovementPositions();
 	SetMovementBox();
+	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
 	
 }
 
@@ -64,13 +67,35 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 			// 	if (Actor.)
 			// }
 			
-			// Spawning key, currently every zombie does this
-			FVector ZombieLocation = this->GetActorLocation();
-			FRotator Rotation = FRotator(0, 0, 0);
-			FActorSpawnParameters SpawnParameters;
-			GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Actor destroyed"));
-			this->Destroy();
+			//AToT_PlayerCharacter* PlayerCharacter = Cast<AToT_PlayerCharacter>(PlayerBlueprint);
+			if (Player)
+			{
+				if (Player->ZombiesKilled < ZombiesToKill)
+				{
+					Player->ZombiesKilled += 1;
+					this->Destroy();
+				}
+				else
+				{
+					if (Player->CryptKeyDropped)
+					{
+						this->Destroy();
+					}
+					else
+					{
+						FVector ZombieLocation = this->GetActorLocation();
+						FRotator Rotation = FRotator(0, 0, 0);
+						FActorSpawnParameters SpawnParameters;
+						GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
+						Player->CryptKeyDropped = true;
+						this->Destroy();
+					}
+				}
+			}
+			else
+			{
+				this->Destroy();	
+			}
 		}
 	}
 }
@@ -91,7 +116,7 @@ void AToT_Zombie_P::SetMovementBox()
 	{
 		if (OverlappingActor->GetClass()->ImplementsInterface(UToT_EnemyInMovementBlock::StaticClass()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Sending Message to movement box"));
 			IToT_EnemyInMovementBlock::Execute_EnemyInMovementBlock(OverlappingActor, this);
 		}
 	}
@@ -122,32 +147,10 @@ void AToT_Zombie_P::SetMovementPositions()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		this->Destroy();	
 	}
-	// else
-	// {
-	// 	MovementLane = 0; 
-	// }
-	
-	// switch (MovementLane)
-	// {
-	// case 0:
-	// 	LanePositionY = 150;
-	// 	break; 
-	// case 1:
-	// 	LanePositionY = -100;
-	// 	break; 
-	// case 2:
-	// 	LanePositionY = 1700;
-	// 	break; 
-	// case 3:
-	// 	LanePositionY = 1450; 
-	// 	break;
-	// default: 
-	// 	LanePositionY = 150;
-	// 	break; 
-	// }
+
 }
 
 void AToT_Zombie_P::AtDownGraveyard_Implementation()
@@ -155,7 +158,7 @@ void AToT_Zombie_P::AtDownGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();
 	EnemyGoalPatrolRight = 8090.f;
 	EnemyGoalPatrolLeft = 3570.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtUpperGraveyard_Implementation()
@@ -163,7 +166,7 @@ void AToT_Zombie_P::AtUpperGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtUpperGraveyard_Implementation();
 	EnemyGoalPatrolRight = 13600.f;
 	EnemyGoalPatrolLeft = 8800.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptGraveyard_Implementation()
@@ -171,15 +174,15 @@ void AToT_Zombie_P::AtCryptGraveyard_Implementation()
 	IToT_MovementBlocks_P::AtCryptGraveyard_Implementation();
 	EnemyGoalPatrolRight = 16050.f;
 	EnemyGoalPatrolLeft = 14450.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 4070.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	EnemyGoalPatrolLeft = 5000.f;
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptMiddle_Implementation()
@@ -187,7 +190,7 @@ void AToT_Zombie_P::AtCryptMiddle_Implementation()
 	IToT_MovementBlocks_P::AtCryptMiddle_Implementation();
 	EnemyGoalPatrolRight = 10850.f;
 	EnemyGoalPatrolLeft = 7830.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptEnd_Implementation()
@@ -195,7 +198,7 @@ void AToT_Zombie_P::AtCryptEnd_Implementation()
 	IToT_MovementBlocks_P::AtCryptEnd_Implementation();
 	EnemyGoalPatrolRight = 14030.f;
 	EnemyGoalPatrolLeft = 12530.f;
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,

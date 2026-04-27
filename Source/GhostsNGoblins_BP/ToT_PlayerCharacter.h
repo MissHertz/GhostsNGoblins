@@ -3,8 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/TimelineComponent.h"
 #include "GameFramework/Character.h"
 #include "ToT_PlayerCharacter.generated.h"
+
+struct FInputActionValue;
+class UInputAction;
+class UInputMappingContext;
 
 UCLASS()
 class GHOSTSNGOBLINS_BP_API AToT_PlayerCharacter : public ACharacter
@@ -108,5 +113,71 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
     	bool BeatenSemiBoss;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interactables")
+	int ZombiesKilled; 
+	
 
+	/*
+	 * Player Controller
+	 */
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputMappingContext* MappingContext;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* RightLeftMovement;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* SwitchLaneOutW;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* SwitchLaneInS;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller")
+	UInputAction* PlayerJumpAction;
+	
+	// Timelines for the controller
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UTimelineComponent* SwitchInTimelineS; 
+	
+	FOnTimelineFloat SwitchInDelegate;
+	FOnTimelineEvent SwitchInOver;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller Timelines")
+	UCurveFloat* SwitchInCurveS;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UTimelineComponent* SwitchOutTimelineW;
+	
+	FOnTimelineFloat SwitchOutDelegate;
+	FOnTimelineEvent SwitchOutOver;
+	
+	UPROPERTY(EditAnywhere, Category = "Controller Timelines")
+	UCurveFloat* SwitchOutCurveW;
+	
+	// Functions for the timelines
+	UFUNCTION()
+	void SwitchInUpdate(float InValue);
+	
+	UFUNCTION()
+	void SwitchInFinished();
+	
+	UFUNCTION()
+	void SwitchOutUpdate(float InValue);
+	
+	UFUNCTION()
+	void SwitchOutFinished();
+	
+	// Controller functions
+	UFUNCTION()
+	void PlayerMoveRightLeft(const FInputActionValue& ActionValue);
+	
+	UFUNCTION()
+	void PlayerSwitchLaneOutW();
+	
+	UFUNCTION()
+	void PlayerSwitchLaneInS();
+	
+	UFUNCTION()
+	void PlayerJump();
+	
 };
