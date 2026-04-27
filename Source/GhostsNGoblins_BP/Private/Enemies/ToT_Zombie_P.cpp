@@ -24,6 +24,9 @@ AToT_Zombie_P::AToT_Zombie_P()
 	
 	// Presetting the variable
 	ZombiesToKill = 3;
+	
+	AnimationTime = 0.8;
+	AnimTimeCounter = 0;
 }
 
 // Called when the game starts or when spawned
@@ -46,6 +49,15 @@ void AToT_Zombie_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (AnimTimeCounter > 0)
+	{
+		AnimTimeCounter -= DeltaTime;
+		if (AnimTimeCounter <= 0)
+		{
+			this->Destroy();
+		}
+	}
+	
 }
 
 // Called to bind functionality to input
@@ -66,12 +78,13 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 		CurrentHealth -= Damage; 
 		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
 		
-		// Playing the hit anitmation
+		// Playing the hit or die anitmation
 		PlayAnimMontage(HitAnimation, 2.f, FName("Default"));
 		
 		// Checks if the enemy is dead after taking the damage, destroying the actor if it is
 		if (CurrentHealth <= 0)
 		{
+			
 			// Checks that the player is valid to be able to get the values
 			if (Player)
 			{
@@ -79,18 +92,23 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 				if (Player->ZombiesKilled < ZombiesToKill)
 				{
 					Player->ZombiesKilled += 1;
-					this->Destroy();
+					PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+					AnimTimeCounter = AnimationTime;
 				}
 				else
 				{
 					// Checks if the key has been dropped already or not
 					if (Player->CryptKeyDropped)
 					{
-						this->Destroy();
+						PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+						AnimTimeCounter = AnimationTime;
 					}
 					// Spawning key if enough zombies have been killed
 					else
 					{
+						PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+						AnimTimeCounter = AnimationTime;
+						
 						FVector ZombieLocation = this->GetActorLocation();
 						FRotator Rotation = FRotator(0, 0, 0);
 						FActorSpawnParameters SpawnParameters;
@@ -102,18 +120,19 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 						Player->CryptKeyDropped = true;
 						
 						// Destroying the actor
-						this->Destroy();
 					}
 				}
 			}
 			// Still destroying and killing the zombie if the player is not valid
 			else
 			{
-				this->Destroy();	
+				PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+				AnimTimeCounter = AnimationTime;
 			}
 		}
 	}
 }
+
 
 // Sending message to the movement block the enemy spawns in
 void AToT_Zombie_P::SetMovementBox()

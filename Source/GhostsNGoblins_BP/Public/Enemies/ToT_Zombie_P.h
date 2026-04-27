@@ -38,6 +38,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
 	int ZombiesToKill;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
+	float AnimationTime;
+	
+	UPROPERTY()
+	float AnimTimeCounter;
+	
+	
 	/*
 	 * Getting player
 	 */
@@ -54,7 +61,11 @@ public:
 	
 	// The animation that plays when the zombie is hit
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
-	UAnimMontage* HitAnimation; 
+	UAnimMontage* HitAnimation;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* DieAnimation;
+	
 	
 	// The key the zombie can drop when killed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drop Objects")
