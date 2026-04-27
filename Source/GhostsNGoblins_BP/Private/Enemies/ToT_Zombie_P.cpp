@@ -16,6 +16,7 @@ AToT_Zombie_P::AToT_Zombie_P()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
+	PlayerOverlapBox->SetupAttachment(RootComponent);
 	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin); // Commented out as the function is not yet in use
 	
 	// Binding the taking damage to the taking damage function
@@ -66,7 +67,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
 		
 		// Playing the hit anitmation
-		PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
+		PlayAnimMontage(HitAnimation, 2.f, FName("Default"));
 		
 		// Checks if the enemy is dead after taking the damage, destroying the actor if it is
 		if (CurrentHealth <= 0)
