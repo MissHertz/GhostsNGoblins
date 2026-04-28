@@ -16,6 +16,9 @@ AToT_Bat_P::AToT_Bat_P()
 	MovementPosZ = -500;
 	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Bat_P::BatAttacked);
+	
+	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
+	CollisionSphere->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +30,7 @@ void AToT_Bat_P::BeginPlay()
 	SetMovementBlocks();
 	
 	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+	
 	
 }
 
@@ -45,12 +49,24 @@ void AToT_Bat_P::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 void AToT_Bat_P::BatAttacked(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (CurrentHealth > 0)
+	TArray<AActor*> ActorArray;
+	CollisionSphere->GetOverlappingActors(ActorArray);
+	
+	
+	for (AActor* OverlappingActor : ActorArray)
 	{
-		CurrentHealth -= Damage;
-		if (CurrentHealth <= 0)
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Something overlapping"));
+		if (Weapon and OverlappingActor->IsA(Weapon))
 		{
-			this->Destroy(); 
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Projectile overlapping"));
+			if (CurrentHealth > 0)
+			{
+				CurrentHealth -= Damage;
+				if (CurrentHealth <= 0)
+				{
+					this->Destroy(); 
+				}
+			}
 		}
 	}
 }
