@@ -17,7 +17,7 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AToT_MovementBlock_P::OnOverlapEnd);
 	
 	PlayerInBox = false; 
-	EnemySpawnTime = 3;
+	EnemySpawnTime = 2;
 	EnemySpawnCooldown = 3;
 	EnemySpawnRange = 2; 
 	DelaySpawnTimer = 2.f;
@@ -145,7 +145,7 @@ void AToT_MovementBlock_P::SpawnBat()
 	
 	FVector PlayerLocation = Player->GetActorLocation();
 	float PositionX = PlayerLocation.X + 500;
-	float PositionZ = PlayerLocation.Z + 150;
+	float PositionZ = PlayerLocation.Z + 100;
 	
 	FVector BatSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
 	// ZombieSpawnLocation.X = PositionX;
