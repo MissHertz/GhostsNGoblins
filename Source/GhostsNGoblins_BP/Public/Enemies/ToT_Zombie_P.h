@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "MovementBlocks/ToT_MovementBlocks_P.h"
+#include "Projectiles/ToT_ProjectileParent_P.h"
 #include "ToT_Zombie_P.generated.h"
 
 UCLASS()
@@ -43,6 +44,9 @@ public:
 	
 	UPROPERTY()
 	float AnimTimeCounter;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+	TSubclassOf<AToT_ProjectileParent_P> Weapon;
 	
 	
 	/*

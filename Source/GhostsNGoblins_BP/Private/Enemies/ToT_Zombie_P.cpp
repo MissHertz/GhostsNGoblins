@@ -27,6 +27,8 @@ AToT_Zombie_P::AToT_Zombie_P()
 	
 	AnimationTime = 0.8;
 	AnimTimeCounter = 0;
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -41,6 +43,7 @@ void AToT_Zombie_P::BeginPlay()
 	
 	// Casting to the player controller to be able to get the player and use the variables for the player
 	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
+	
 	
 }
 
@@ -66,69 +69,79 @@ void AToT_Zombie_P::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-// Enemy taking damage dunction
+// Enemy taking damage function
 void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
+	TArray<AActor*> ActorArray;
 	
-	// Checks if the health is above zero
-	if (CurrentHealth > 0)
+	GetCapsuleComponent()->GetOverlappingActors(ActorArray);
+	
+	for (AActor* OverlappingActor : ActorArray)
 	{
-		// Subtracting the damage from the healt
-		CurrentHealth -= Damage; 
-		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
-		
-		// Playing the hit or die anitmation
-		PlayAnimMontage(HitAnimation, 2.f, FName("Default"));
-		
-		// Checks if the enemy is dead after taking the damage, destroying the actor if it is
-		if (CurrentHealth <= 0)
+		if (Weapon and OverlappingActor->IsA(Weapon))
 		{
-			
-			// Checks that the player is valid to be able to get the values
-			if (Player)
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Projectile overlapping"));
+			// Checks if the health is above zero
+			if (CurrentHealth > 0)
 			{
-				// Checks if enough zombies has been killed to be able to spawn a key
-				if (Player->ZombiesKilled < ZombiesToKill)
+				// Subtracting the damage from the healt
+				CurrentHealth -= Damage; 
+				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
+		
+				// Playing the hit or die anitmation
+				PlayAnimMontage(HitAnimation, 2.f, FName("Default"));
+		
+				// Checks if the enemy is dead after taking the damage, destroying the actor if it is
+				if (CurrentHealth <= 0)
 				{
-					Player->ZombiesKilled += 1;
-					PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
-					AnimTimeCounter = AnimationTime;
-				}
-				else
-				{
-					// Checks if the key has been dropped already or not
-					if (Player->CryptKeyDropped)
+			
+					// Checks that the player is valid to be able to get the values
+					if (Player)
 					{
-						PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
-						AnimTimeCounter = AnimationTime;
+						// Checks if enough zombies has been killed to be able to spawn a key
+						if (Player->ZombiesKilled < ZombiesToKill)
+						{
+							Player->ZombiesKilled += 1;
+							PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+							AnimTimeCounter = AnimationTime;
+						}
+						else
+						{
+							// Checks if the key has been dropped already or not
+							if (Player->CryptKeyDropped)
+							{
+								PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+								AnimTimeCounter = AnimationTime;
+							}
+							// Spawning key if enough zombies have been killed
+							else
+							{
+								PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+								AnimTimeCounter = AnimationTime;
+						
+								FVector ZombieLocation = this->GetActorLocation();
+								FRotator Rotation = FRotator(0, 0, 0);
+								FActorSpawnParameters SpawnParameters;
+						
+								// Spawning key at the zombies location
+								GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
+						
+								// Telling the player the key is dropped
+								Player->CryptKeyDropped = true;
+						
+								// Destroying the actor
+							}
+						}
 					}
-					// Spawning key if enough zombies have been killed
+					// Still destroying and killing the zombie if the player is not valid
 					else
 					{
 						PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
 						AnimTimeCounter = AnimationTime;
-						
-						FVector ZombieLocation = this->GetActorLocation();
-						FRotator Rotation = FRotator(0, 0, 0);
-						FActorSpawnParameters SpawnParameters;
-						
-						// Spawning key at the zombies location
-						GetWorld()->SpawnActor<AActor>(DropKey, ZombieLocation, Rotation, SpawnParameters);
-						
-						// Telling the player the key is dropped
-						Player->CryptKeyDropped = true;
-						
-						// Destroying the actor
 					}
 				}
-			}
-			// Still destroying and killing the zombie if the player is not valid
-			else
-			{
-				PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
-				AnimTimeCounter = AnimationTime;
-			}
+			} 
 		}
 	}
 }
