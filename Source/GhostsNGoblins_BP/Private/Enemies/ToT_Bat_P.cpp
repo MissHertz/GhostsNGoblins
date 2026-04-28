@@ -16,6 +16,9 @@ AToT_Bat_P::AToT_Bat_P()
 	MovementPosZ = -500;
 	
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Bat_P::BatAttacked);
+	
+	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
+	CollisionSphere->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +30,7 @@ void AToT_Bat_P::BeginPlay()
 	SetMovementBlocks();
 	
 	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
+	
 	
 }
 
@@ -45,12 +49,24 @@ void AToT_Bat_P::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 void AToT_Bat_P::BatAttacked(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (CurrentHealth > 0)
+	TArray<AActor*> ActorArray;
+	CollisionSphere->GetOverlappingActors(ActorArray);
+	
+	
+	for (AActor* OverlappingActor : ActorArray)
 	{
-		CurrentHealth -= Damage;
-		if (CurrentHealth <= 0)
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Something overlapping"));
+		if (Weapon and OverlappingActor->IsA(Weapon))
 		{
-			this->Destroy(); 
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Projectile overlapping"));
+			if (CurrentHealth > 0)
+			{
+				CurrentHealth -= Damage;
+				if (CurrentHealth <= 0)
+				{
+					this->Destroy(); 
+				}
+			}
 		}
 	}
 }
@@ -60,29 +76,23 @@ void AToT_Bat_P::SetMovementPositions()
 	FVector BatPosition = GetActorLocation();
 	if (BatPosition.Y == 150)
 	{
-		//MovementLane = 0; 
 		LanePositionY = 150;
 	}
 	else if (BatPosition.Y == -100)
 	{
-		//MovementLane = 1;
 		LanePositionY = -100;
 	}
 	else if (BatPosition.Y == 1700)
 	{
-		//MovementLane = 2;
 		LanePositionY = 1700;
 	}
 	else if (BatPosition.Y == 1450)
 	{
-		//MovementLane = 3;
 		LanePositionY = 1450;
 	}
 	else
 	{
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
-		}
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		this->Destroy();
 	}
 	
@@ -109,7 +119,9 @@ void AToT_Bat_P::SetMovementBlocks()
 	}
 }
 
-// Setting patrol positions
+/*
+ * Setting patrol positions
+ */ 
 void AToT_Bat_P::AtDownGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();

@@ -217,10 +217,12 @@ void AToT_PlayerCharacter::PlayerMoveRightLeft(const FInputActionValue& ActionVa
 // Player switching lane out (Further away from the camera)
 void AToT_PlayerCharacter::PlayerSwitchLaneOutW()
 {
+	// Checking if the player is not already in this lane, moving the player if it isn't
 	if (HasSwitched == false)
 	{
 		if (SwitchOutTimelineW)
 		{
+			// Running the timeline from start
 			SwitchOutTimelineW->PlayFromStart();
 		}
 	}
@@ -229,10 +231,12 @@ void AToT_PlayerCharacter::PlayerSwitchLaneOutW()
 // Player switching lane in (Closer to the camera)
 void AToT_PlayerCharacter::PlayerSwitchLaneInS()
 {
+	// Checking if the player is not already in this lane, moving the player if it isn't
 	if (HasSwitched == true)
 	{
 		if (SwitchInTimelineS)
 		{
+			// Running the timeline from start
 			SwitchInTimelineS->PlayFromStart();
 		}
 	}
