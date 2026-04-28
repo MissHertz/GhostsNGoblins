@@ -79,7 +79,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 	
 	for (AActor* OverlappingActor : ActorArray)
 	{
-		if (Weapon and OverlappingActor->IsA(Weapon))
+		if ((Weapon and OverlappingActor->IsA(Weapon)) or (GroundFire and OverlappingActor->IsA(GroundFire)))
 		{
 			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Projectile overlapping"));
 			// Checks if the health is above zero

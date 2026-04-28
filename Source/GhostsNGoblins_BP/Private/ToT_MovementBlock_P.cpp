@@ -145,7 +145,7 @@ void AToT_MovementBlock_P::SpawnBat()
 	
 	FVector PlayerLocation = Player->GetActorLocation();
 	float PositionX = PlayerLocation.X + 500;
-	float PositionZ = PlayerLocation.Z + 100;
+	float PositionZ = PlayerLocation.Z + 50;
 	
 	FVector BatSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
 	// ZombieSpawnLocation.X = PositionX;
