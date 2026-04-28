@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "MovementBlocks/ToT_MovementBlocks_P.h"
+#include "Projectiles/ToT_ProjectileParent_P.h"
 #include "ToT_Zombie_P.generated.h"
 
 UCLASS()
@@ -32,18 +33,47 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+	/*
+	 * Zombie's own variables
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
+	int ZombiesToKill;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
+	float AnimationTime;
+	
+	UPROPERTY()
+	float AnimTimeCounter;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+	TSubclassOf<AToT_ProjectileParent_P> Weapon;
+	
+	
+	/*
+	 * Getting player
+	 */
+	AToT_PlayerCharacter* Player;
+	
+	
+	/*
+	 * Zombie hit and/or killed functions an properties
+	 */
+	// Function for zombie taking damage
 	UFUNCTION()
 	void ZombieAttacked(AActor* DamagedActor, float Damage, 
 		const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 	
+	// The animation that plays when the zombie is hit
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
-	UAnimMontage* HitAnimation; 
+	UAnimMontage* HitAnimation;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	UAnimMontage* DieAnimation;
+	
+	
+	// The key the zombie can drop when killed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drop Objects")
 	UClass* DropKey; 
-	
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
-	// UClass* Player;
 	
 	/*
 	 * Setting movement positions
@@ -60,11 +90,9 @@ public:
 	virtual void AtCryptStart_Implementation() override;
 	virtual void AtCryptMiddle_Implementation() override;
 	virtual void AtCryptEnd_Implementation() override;
-	// virtual void EnemyInMovementBlock_Implementation(AActor* Executor) override;
-	
 	
 	/*
-	 * Checking for player
+	 * Checking for player, currently not in use
 	 */
 	
 	UFUNCTION()
@@ -76,16 +104,5 @@ public:
 	   bool bFromSweep,
 	   const FHitResult& SweepResult
    );
-	
-	/*
-	 * Get player
-	 */
-	AToT_PlayerCharacter* Player;
-	
-	/*
-	 * Zombie's own variables
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zombie Variables")
-	int ZombiesToKill;
 	
 };

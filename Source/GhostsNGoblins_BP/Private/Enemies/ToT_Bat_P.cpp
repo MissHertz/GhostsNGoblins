@@ -60,29 +60,23 @@ void AToT_Bat_P::SetMovementPositions()
 	FVector BatPosition = GetActorLocation();
 	if (BatPosition.Y == 150)
 	{
-		//MovementLane = 0; 
 		LanePositionY = 150;
 	}
 	else if (BatPosition.Y == -100)
 	{
-		//MovementLane = 1;
 		LanePositionY = -100;
 	}
 	else if (BatPosition.Y == 1700)
 	{
-		//MovementLane = 2;
 		LanePositionY = 1700;
 	}
 	else if (BatPosition.Y == 1450)
 	{
-		//MovementLane = 3;
 		LanePositionY = 1450;
 	}
 	else
 	{
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
-		}
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No lane position"));
 		this->Destroy();
 	}
 	
@@ -109,7 +103,9 @@ void AToT_Bat_P::SetMovementBlocks()
 	}
 }
 
-// Setting patrol positions
+/*
+ * Setting patrol positions
+ */ 
 void AToT_Bat_P::AtDownGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();
