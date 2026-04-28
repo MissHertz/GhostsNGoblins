@@ -25,7 +25,7 @@ AToT_Zombie_P::AToT_Zombie_P()
 	// Presetting the variable
 	ZombiesToKill = 3;
 	
-	AnimationTime = 0.8;
+	AnimationTime = 0.6;
 	AnimTimeCounter = 0;
 	
 	
