@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ToT_EnemyParent_P.h"
 #include "MovementBlocks/ToT_MovementBlocks_P.h"
+#include "Projectiles/ToT_ProjectileParent_P.h"
 #include "ToT_Bat_P.generated.h"
 
 UCLASS()
@@ -27,8 +28,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USphereComponent* CollisionSphere;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy Movement")
 	float MovementPosZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+	TSubclassOf<AToT_ProjectileParent_P> Weapon;
 	
 	UFUNCTION()
 	void BatAttacked(AActor* DamagedActor, 
