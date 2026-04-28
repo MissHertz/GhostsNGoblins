@@ -48,6 +48,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
 	TSubclassOf<AToT_ProjectileParent_P> Weapon;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons")
+	TSubclassOf<AActor> GroundFire;
+	
 	
 	/*
 	 * Getting player
