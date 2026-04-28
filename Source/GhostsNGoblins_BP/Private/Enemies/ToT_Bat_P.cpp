@@ -19,6 +19,7 @@ AToT_Bat_P::AToT_Bat_P()
 	
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetupAttachment(RootComponent);
+	CollisionSphere->SetSphereRadius(45.f);
 }
 
 // Called when the game starts or when spawned
