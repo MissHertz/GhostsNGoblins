@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interaction/ToT_Interact_P.h"
 #include "ToT_Bridge.generated.h"
 
 UCLASS()
-class GHOSTSNGOBLINS_BP_API AToT_Bridge : public AActor
+class GHOSTSNGOBLINS_BP_API AToT_Bridge : public AActor, public IToT_Interact_P
 {
 	GENERATED_BODY()
 
@@ -22,4 +23,13 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* Bridge;
+	
+	/*UPROPERTY(EditAnywhere, Category = "Interfaces")
+	TScriptInterface<UInterface> BPI_Interact;*/
+	
+	// Function from Interface Interact
+	virtual void Rotate_Implementation() override;
 };
