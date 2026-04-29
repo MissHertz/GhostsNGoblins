@@ -19,6 +19,7 @@ AToT_Bat_P::AToT_Bat_P()
 	
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetupAttachment(RootComponent);
+	CollisionSphere->SetSphereRadius(45.f);
 }
 
 // Called when the game starts or when spawned
@@ -150,7 +151,7 @@ void AToT_Bat_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 5000.f;
+	EnemyGoalPatrolLeft = 5040.f;
 	MovementPosZ = -1700;
 }
 

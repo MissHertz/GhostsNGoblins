@@ -90,7 +90,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("I have taken damage"));
 		
 				// Playing the hit or die anitmation
-				PlayAnimMontage(HitAnimation, 2.f, FName("Default"));
+				PlayAnimMontage(HitAnimation, 1.f, FName("Default"));
 		
 				// Checks if the enemy is dead after taking the damage, destroying the actor if it is
 				if (CurrentHealth <= 0)
@@ -103,7 +103,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 						if (Player->ZombiesKilled < ZombiesToKill)
 						{
 							Player->ZombiesKilled += 1;
-							PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+							PlayAnimMontage(DieAnimation, 1.f, FName("Default"));
 							AnimTimeCounter = AnimationTime;
 						}
 						else
@@ -111,13 +111,13 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 							// Checks if the key has been dropped already or not
 							if (Player->CryptKeyDropped)
 							{
-								PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+								PlayAnimMontage(DieAnimation, 1.f, FName("Default"));
 								AnimTimeCounter = AnimationTime;
 							}
 							// Spawning key if enough zombies have been killed
 							else
 							{
-								PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+								PlayAnimMontage(DieAnimation, 1.f, FName("Default"));
 								AnimTimeCounter = AnimationTime;
 						
 								FVector ZombieLocation = this->GetActorLocation();
@@ -137,7 +137,7 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 					// Still destroying and killing the zombie if the player is not valid
 					else
 					{
-						PlayAnimMontage(DieAnimation, 3.f, FName("Default"));
+						PlayAnimMontage(DieAnimation, 1.f, FName("Default"));
 						AnimTimeCounter = AnimationTime;
 					}
 				}
@@ -232,7 +232,7 @@ void AToT_Zombie_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
 	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 5000.f;
+	EnemyGoalPatrolLeft = 5040.f;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
