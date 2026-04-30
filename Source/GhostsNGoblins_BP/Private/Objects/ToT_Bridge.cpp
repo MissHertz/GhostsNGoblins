@@ -20,7 +20,6 @@ AToT_Bridge::AToT_Bridge()
 void AToT_Bridge::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -38,7 +37,7 @@ void AToT_Bridge::Rotate_Implementation()
 		AToT_Bridge::StaticClass(),
 		FName("Right"),
 		RightBridges);
-	UE_LOG(LogTemp, Warning, TEXT("Found %d Right Bridges"), RightBridges.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("Found %d Right Bridges"), RightBridges.Num());
 
 	for (auto CurrentRightBridge : RightBridges)
 	{
@@ -61,7 +60,7 @@ void AToT_Bridge::Rotate_Implementation()
 		AToT_Bridge::StaticClass(),
 		FName("Left"),
 		LeftBridges);
-	UE_LOG(LogTemp, Warning, TEXT("Found %d Left Bridges"), LeftBridges.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("Found %d Left Bridges"), LeftBridges.Num());
 
 	for (auto CurrentLeftBridge : LeftBridges)
 	{

@@ -3,18 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "Interaction/ToT_Interact_P.h"
-#include "ToT_Bridge.generated.h"
+#include "ToT_Lever.generated.h"
 
 UCLASS()
-class GHOSTSNGOBLINS_BP_API AToT_Bridge : public AActor, public IToT_Interact_P
+class GHOSTSNGOBLINS_BP_API AToT_Lever : public AActor, public IToT_Interact_P
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AToT_Bridge();
+	AToT_Lever();
 
 protected:
 	// Called when the game starts or when spawned
@@ -25,8 +26,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
-	UStaticMeshComponent* Bridge;
+	UStaticMeshComponent* Lever;
 	
-	// Function from Interface Interact
-	virtual void Rotate_Implementation() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UBoxComponent* CollisionBox;
+	
+	virtual void Interact_Implementation(ACharacter* CharacterInstigator) override;
 };

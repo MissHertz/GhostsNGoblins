@@ -25,7 +25,7 @@ public:
 	
 	// Functions for different types of interaction
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Interact(ACharacter* Instigator);
+	void Interact(ACharacter* CharacterInstigator);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Attack();
