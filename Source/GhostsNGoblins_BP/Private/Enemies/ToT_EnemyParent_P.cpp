@@ -13,13 +13,10 @@ AToT_EnemyParent_P::AToT_EnemyParent_P()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	// Setting up the actors collision component
-	// CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
-	// RootComponent = CollisionCapsule;
-	// CollisionCapsule->SetCollisionProfileName(TEXT("Something"));
-	// CollisionCapsule->SetNotifyRigidBodyCollision(true); 
 	
-	
+	/*
+	 * Setting default settings for variables
+	 */
 	// Health Related
 	MaxHealth = 100; 
 	CurrentHealth = MaxHealth; 
@@ -38,6 +35,7 @@ AToT_EnemyParent_P::AToT_EnemyParent_P()
 	TwoLaneAttack = false;
 	CanAttack = false;
 	JustHit = false;
+	EnemyHitCooldownTime = 1; 
 	
 }
 
@@ -46,8 +44,10 @@ void AToT_EnemyParent_P::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Binding functions
 	UCapsuleComponent* CollisionCapsule = GetCapsuleComponent();
 	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_EnemyParent_P::OnPlayerHit);
+	
 }
 
 // Called every frame
@@ -75,19 +75,21 @@ void AToT_EnemyParent_P::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+// Dealing damage when hitting the player
 void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* HitActor,
 	UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
+	// Checks if the overlapping actor is the player
 	if (HitActor and PlayerBlueprint and  HitActor->IsA(PlayerBlueprint))
 	{
+		// Dealing damage if the enemy has not just hit the player this is to make sure the player has time to react before taking more damage
 		if (JustHit == false)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player."));
+			// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player.")); // Debug message
 			UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
-			EnemyHitCooldown = 1;
+			EnemyHitCooldown = EnemyHitCooldownTime;
 			JustHit = true; 
 		}
 	}
-	
 }
 
