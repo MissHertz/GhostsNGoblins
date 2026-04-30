@@ -22,6 +22,11 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	EnemySpawnRange = 2; 
 	DelaySpawnTimer = 2.f;
 	
+	BatSpawnOffsetX = 600; 
+	BatSpawnOffsetZ = 50;
+	ZombieSpawnOffsetX = 500;
+	ZombieSpawnOffsetZ = 50;
+	
 }
 
 // Called when the game starts or when spawned
@@ -76,26 +81,27 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 		
 		if (EnemySpawnCooldown <= 0)
 		{
-			
+			// Getting a random integer
 			int RandomInteger = FMath::RandHelper(EnemySpawnRange);
 			
+			// Spawning enemies according to the value of the random integer
 			switch (RandomInteger)
 			{
 			case 0: 
-				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE"));
+				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE")); // Debug Message
 				SpawnZombie();
 				break;
 			case 1:
-				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning BAT"));
+				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning BAT")); // Debug Message
 				SpawnBat();
 				break;
 			default:
-				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning NOTHING"));
+				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning NOTHING")); // Debug Message
 				break;
 			}
 			
 			// Debug message
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy")); // Debug Message
 			
 			EnemySpawnCooldown = EnemySpawnTime;
 		}
@@ -107,18 +113,15 @@ void AToT_MovementBlock_P::SpawnZombie()
 {
 	if (Player == nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa")); // Debug Message
 		return;
 	} 
 	
 	FVector PlayerLocation = Player->GetActorLocation();
-	float PositionX = PlayerLocation.X + 500;
-	float PositionZ = PlayerLocation.Z + 50;
+	float PositionX = PlayerLocation.X + ZombieSpawnOffsetX;
+	float PositionZ = PlayerLocation.Z + ZombieSpawnOffsetZ;
 	
 	FVector ZombieSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
-	// ZombieSpawnLocation.X = PositionX;
-	// ZombieSpawnLocation.Y = PlayerLocation.Y;
-	// ZombieSpawnLocation.Z = PositionZ;
 	
 	FRotator ZombieRotation;
 	ZombieRotation.Yaw = 0;
@@ -139,26 +142,24 @@ void AToT_MovementBlock_P::SpawnBat()
 {
 	if (Player == nullptr)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa")); // Debug Message
 		return;
 	} 
 	
+	// Getting the player's location and finding a spawn location for the bat
 	FVector PlayerLocation = Player->GetActorLocation();
-	float PositionX = PlayerLocation.X + 500;
-	float PositionZ = PlayerLocation.Z + 50;
+	float PositionX = PlayerLocation.X + BatSpawnOffsetX;
+	float PositionZ = PlayerLocation.Z + BatSpawnOffsetZ;
 	
+	// Setting the spawn location
 	FVector BatSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
-	// ZombieSpawnLocation.X = PositionX;
-	// ZombieSpawnLocation.Y = PlayerLocation.Y;
-	// ZombieSpawnLocation.Z = PositionZ;
-	
+
+	// Setting the bats rotation
 	FRotator BatRotation = FRotator(0, 0, 0);
-	// BatRotation.Yaw = 0;
-	// BatRotation.Roll = 0;
-	// BatRotation.Pitch = 0;
 	
 	FActorSpawnParameters SpawnParameters;
 	
+	// Spawning the bat
 	GetWorld()->SpawnActor<ACharacter>(Bat, 
 		BatSpawnLocation,
 		BatRotation,

@@ -62,7 +62,7 @@ void AToT_PlayerCharacter::BeginPlay()
 		}
 	}
 	
-	// Binding the timelines to a function
+	// Binding the timelines to the correlating functions
 	SwitchInDelegate.BindDynamic(this, &AToT_PlayerCharacter::SwitchInUpdate);
 	SwitchInOver.BindDynamic(this, &AToT_PlayerCharacter::SwitchInFinished);
 	
@@ -109,7 +109,7 @@ void AToT_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 // Currently not in use
 void AToT_PlayerCharacter::HandleCameraSplineMovement(AActor CameraSplineReference)
 {
-	FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+	//FVector PlayerPosition = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 }
 
 // Switching in timeline (closer to the camera)
