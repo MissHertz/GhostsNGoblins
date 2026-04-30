@@ -13,7 +13,7 @@ class UToT_MovementBlocks_P : public UInterface
 	GENERATED_BODY()
 };
 
-/*
+/**
  * 
  */
 class GHOSTSNGOBLINS_BP_API IToT_MovementBlocks_P
