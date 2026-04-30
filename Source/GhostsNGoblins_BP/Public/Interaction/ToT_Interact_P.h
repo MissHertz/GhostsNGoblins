@@ -22,4 +22,14 @@ class GHOSTSNGOBLINS_BP_API IToT_Interact_P
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	
+	// Functions for different types of interaction
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Interact(ACharacter* Instigator);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Attack();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Rotate();
 };

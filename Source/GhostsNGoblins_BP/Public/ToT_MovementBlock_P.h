@@ -70,6 +70,7 @@ public:
 	UFUNCTION()
 	void SpawnBat();
 	
+	// Spawn variables
 	UPROPERTY(EditAnywhere, Category="Spawner")
 	float EnemySpawnTime;
 	
@@ -87,6 +88,18 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category="Spawn Actors")
 	UClass* Bat;
+	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	float BatSpawnOffsetX; 
+	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	float BatSpawnOffsetZ; 
+	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	float ZombieSpawnOffsetX; 
+	
+	UPROPERTY(EditAnywhere, Category="Spawn Actors")
+	float ZombieSpawnOffsetZ; 
 	
 	UPROPERTY()
 	AToT_PlayerCharacter* Player; 
