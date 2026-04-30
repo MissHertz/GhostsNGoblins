@@ -39,15 +39,36 @@ void AToT_BigBoss_P::BigBossAttacked(AActor* DamagedActor, float Damage, const c
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= Damage;
-		if (CurrentHealth < 120)
+	        
+		if (CurrentHealth < 120 && BossLowHealth)
 		{
-			if (BossLowHealth)
-			{
-				GetMesh()->SetSkeletalMesh(BossLowHealth);
-			}
+			GetMesh()->SetSkeletalMesh(BossLowHealth);
 		}
+	 
 		if (CurrentHealth <= 0)
 		{
+			// Logic to execute before elimination
+			if (VictoryWidgetClass)
+			{
+				APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+				if (PC)
+				{
+					// Create the widget instance
+					UUserWidget* VictoryWidget = CreateWidget<UUserWidget>(PC, VictoryWidgetClass);
+					if (VictoryWidget)
+					{
+						// Add the widget to the player's screen
+						VictoryWidget->AddToViewport();
+	                        
+						// Enable mouse so player can click buttons on the widget
+						PC->SetShowMouseCursor(true);
+						FInputModeUIOnly InputMode;
+						PC->SetInputMode(InputMode);
+					}
+				}
+			}
+	 
+			// Final elimination of the actor
 			this->Destroy(); 
 		}
 	}

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ToT_EnemyParent_P.h"
+#include "Blueprint/UserWidget.h" // Added for UUserWidget
 #include "ToT_BigBoss_P.generated.h"
 
 UCLASS()
@@ -15,6 +16,9 @@ public:
 	// Sets default values for this character's properties
 	AToT_BigBoss_P();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> VictoryWidgetClass;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
