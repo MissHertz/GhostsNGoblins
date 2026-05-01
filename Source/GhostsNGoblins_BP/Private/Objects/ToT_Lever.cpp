@@ -36,7 +36,7 @@ void AToT_Lever::Interact_Implementation(ACharacter* CharacterInstigator)
 	//IToT_Interact_P::Interact_Implementation(Instigator);
 	
 	// Rotates the Lever actor
-	FRotator LeverRotation = FRotator(180.0, 0.0, 0.0);
+	FRotator LeverRotation = FRotator(45.0, 0.0, 0.0);
 	this->AddActorWorldRotation(LeverRotation);
 	
 	// Gets all actor of class Bridge
@@ -47,9 +47,12 @@ void AToT_Lever::Interact_Implementation(ACharacter* CharacterInstigator)
 		Bridges);
 	
 	// Sends a message through Interact Interface to Rotate the Bridge
-	for (auto Bridge : Bridges)
+	for (AActor* CurrentBridge:Bridges)
 	{
-		IToT_Interact_P::Execute_Rotate(Bridge);
+		if (CurrentBridge && CurrentBridge->GetClass()->ImplementsInterface(UToT_Interact_P::StaticClass()))
+		{
+			IToT_Interact_P::Execute_Rotate(CurrentBridge);
+		}
 	}
 }
 
