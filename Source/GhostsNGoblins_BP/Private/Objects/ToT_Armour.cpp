@@ -15,7 +15,7 @@ AToT_Armour::AToT_Armour()
 	Armour = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	RootComponent = Armour;
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision"));
-	OnPickedUp = CreateDefaultSubobject<UChaosGameplayEventDispatcher>(TEXT("EventDispatcher"));
+	//OnPickedUp = CreateDefaultSubobject<UChaosGameplayEventDispatcher>(TEXT("EventDispatcher"));
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +33,6 @@ void AToT_Armour::Tick(float DeltaTime)
 
 void AToT_Armour::PickUp()
 {
-	CollisionBox->OnComponentBeginOverlap;
+	//CollisionBox->OnComponentBeginOverlap;
 }
 

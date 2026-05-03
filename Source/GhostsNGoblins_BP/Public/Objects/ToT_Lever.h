@@ -31,5 +31,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* CollisionBox;
 	
-	virtual void Interact_Implementation(ACharacter* CharacterInstigator) override;
+	virtual void InteractCPP_Implementation(ACharacter* CharacterInstigator) override;
 };

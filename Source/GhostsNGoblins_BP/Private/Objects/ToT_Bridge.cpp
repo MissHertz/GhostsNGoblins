@@ -28,7 +28,7 @@ void AToT_Bridge::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AToT_Bridge::Rotate_Implementation()
+void AToT_Bridge::RotateCPP_Implementation()
 {	
 	// Code for the bridget with tag "Right"
 	TArray<AActor*> RightBridges;

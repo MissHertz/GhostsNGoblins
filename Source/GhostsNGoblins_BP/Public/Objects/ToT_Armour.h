@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "ToT_Armour.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class GHOSTSNGOBLINS_BP_API AToT_Armour : public AActor
 {
@@ -30,8 +32,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBoxComponent* CollisionBox;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UChaosGameplayEventDispatcher* OnPickedUp;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//UChaosGameplayEventDispatcher* OnPickedUp;
 	
 	virtual void PickUp();
 };

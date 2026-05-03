@@ -25,11 +25,11 @@ public:
 	
 	// Functions for different types of interaction
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Interact(ACharacter* CharacterInstigator);
+	void InteractCPP(ACharacter* CharacterInstigator);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Attack();
+	void AttackCPP();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Rotate();
+	void RotateCPP();
 };

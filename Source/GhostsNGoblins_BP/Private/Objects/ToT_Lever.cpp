@@ -31,7 +31,7 @@ void AToT_Lever::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AToT_Lever::Interact_Implementation(ACharacter* CharacterInstigator)
+void AToT_Lever::InteractCPP_Implementation(ACharacter* CharacterInstigator)
 {
 	//IToT_Interact_P::Interact_Implementation(Instigator);
 	
@@ -51,7 +51,7 @@ void AToT_Lever::Interact_Implementation(ACharacter* CharacterInstigator)
 	{
 		if (CurrentBridge && CurrentBridge->GetClass()->ImplementsInterface(UToT_Interact_P::StaticClass()))
 		{
-			IToT_Interact_P::Execute_Rotate(CurrentBridge);
+			IToT_Interact_P::Execute_RotateCPP(CurrentBridge);
 		}
 	}
 }

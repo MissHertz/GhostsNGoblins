@@ -28,5 +28,5 @@ public:
 	UStaticMeshComponent* Bridge;
 	
 	// Function from Interface Interact
-	virtual void Rotate_Implementation() override;
+	virtual void RotateCPP_Implementation() override;
 };
