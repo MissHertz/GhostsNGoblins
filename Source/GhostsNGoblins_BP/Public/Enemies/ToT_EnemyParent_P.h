@@ -19,7 +19,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
 	UMeshComponent* EnemyMesh;
 	
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
 	//UCapsuleComponent* CollisionCapsule;
 
 protected:
