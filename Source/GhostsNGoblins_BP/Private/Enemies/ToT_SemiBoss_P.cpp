@@ -16,7 +16,7 @@ AToT_SemiBoss_P::AToT_SemiBoss_P()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	// Health variables setup
-	MaxHealth = 8.f;
+	MaxHealth = 220.f;
 	CurrentHealth = MaxHealth;
 	
 	// Combat variables setup
@@ -25,9 +25,18 @@ AToT_SemiBoss_P::AToT_SemiBoss_P()
 	ChargedAttackCount = 0.f;
 	IsSemiBossDead = false;
 	CanAttack = false;
+	JustHit = false;
 	
+	// State Tree components setup
 	StateTreeComponent = CreateDefaultSubobject<UStateTreeComponent>(TEXT("StateTreeComponent"));
 	Dead.Tag = FGameplayTag::RequestGameplayTag(TEXT("SemiBossDead"));
+	
+	// Collision setup
+	UCapsuleComponent* CollisionCapsule = GetCapsuleComponent();
+	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_SemiBoss_P::OnOverlapBegin);
+	
+	// Binding the event ApplyDamage to the function TakeDamage
+	OnTakeAnyDamage.AddDynamic(this, &AToT_SemiBoss_P::TakeDamage);
 	
 }
 
@@ -36,15 +45,25 @@ void AToT_SemiBoss_P::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// Collision
-	UCapsuleComponent* CollisionCapsule = GetCapsuleComponent();
-	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_SemiBoss_P::OnOverlapBegin);
+	
 }
 
 // Called every frame
 void AToT_SemiBoss_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	if (JustHit == true)
+	{
+		if (EnemyHitCooldown > 0)
+		{
+			EnemyHitCooldown -= DeltaTime;
+		}
+		else if (EnemyHitCooldown <= 0)
+		{
+			JustHit = false; 
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -59,23 +78,25 @@ void AToT_SemiBoss_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	if (OtherActor->IsA<AToT_ProjectileParent_P>())
 	{
 		this->PlayAnimMontage(TakingDamageMontage, 1.0, NAME_None);
-		UGameplayStatics::ApplyDamage(
+		/*UGameplayStatics::ApplyDamage(
 			this, 
 			1.0, 
 			OtherActor->GetInstigatorController(),
 			OtherActor, 
-			UDamageType::StaticClass());
+			UDamageType::StaticClass());*/
 	}
 }
 
-float AToT_SemiBoss_P::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-	class AController* EventInstigator, AActor* DamageCauser)
+void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage, 
+	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	//float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 		
 	if (CurrentHealth > 0.f)
 	{
-		CurrentHealth -= DamageApplied;
+		CurrentHealth -= Damage;
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, 
+	FString::Printf(TEXT("Damage: %f | Health Remaining: %f"), Damage, CurrentHealth));
 	}
 	
 	if (CurrentHealth <= 0.f)
@@ -83,6 +104,7 @@ float AToT_SemiBoss_P::TakeDamage(float DamageAmount, struct FDamageEvent const&
 		CurrentHealth = 0.f;
 		IsSemiBossDead = true;
 		StateTreeComponent->SendStateTreeEvent(Dead);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("should be dead now"));
 		
 		TArray<AActor*> PlayerArray;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AToT_PlayerCharacter::StaticClass(), PlayerArray);
@@ -94,7 +116,5 @@ float AToT_SemiBoss_P::TakeDamage(float DamageAmount, struct FDamageEvent const&
 			}
 		}
 	}
-	
-	return DamageApplied;
 }
 
