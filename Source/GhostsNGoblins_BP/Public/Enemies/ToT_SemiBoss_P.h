@@ -60,6 +60,7 @@ public:
 						UPrimitiveComponent* OtherComp, int OtherBodyIndex, 
 						bool bFromSweep, const FHitResult& SweepResult);
 	
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, 
-		class AController* EventInstigator, AActor* DamageCauser) override;
+	UFUNCTION()
+	void TakeDamage(AActor* DamagedActor, float Damage, 
+		const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 };
