@@ -30,14 +30,13 @@ void AToT_Bridge::Tick(float DeltaTime)
 
 void AToT_Bridge::RotateCPP_Implementation()
 {	
-	// Code for the bridget with tag "Right"
+	// Code for the bridge with tag "Right"
 	TArray<AActor*> RightBridges;
 	UGameplayStatics::GetAllActorsOfClassWithTag(
 		GetWorld(),
 		AToT_Bridge::StaticClass(),
 		FName("Right"),
 		RightBridges);
-	//UE_LOG(LogTemp, Warning, TEXT("Found %d Right Bridges"), RightBridges.Num());
 
 	for (auto CurrentRightBridge : RightBridges)
 	{
@@ -61,7 +60,6 @@ void AToT_Bridge::RotateCPP_Implementation()
 		AToT_Bridge::StaticClass(),
 		FName("Left"),
 		LeftBridges);
-	//UE_LOG(LogTemp, Warning, TEXT("Found %d Left Bridges"), LeftBridges.Num());
 
 	for (auto CurrentLeftBridge : LeftBridges)
 	{

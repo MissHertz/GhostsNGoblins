@@ -7,9 +7,11 @@ AToT_ProjectileTorch_P::AToT_ProjectileTorch_P()
 {
 	PrimaryActorTick.bCanEverTick = true;
     
+	// Collision and variable setup
 	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_ProjectileTorch_P::OnHittingEnemy);
 	ExistingFire = false;
 
+	// Ignoring the collision with the player
 	if (Projectile)
 	{
 		Projectile->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
@@ -18,13 +20,14 @@ AToT_ProjectileTorch_P::AToT_ProjectileTorch_P()
 
 void AToT_ProjectileTorch_P::BeginPlay()
 {
-	Super::BeginPlay(); // This runs the Blueprint BeginPlay, which handles the impulse
+	Super::BeginPlay();
 }
 
 void AToT_ProjectileTorch_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     
+	// Destroying the character functionality from
 	ExsistanceTime -= DeltaTime; 
 	if (ExsistanceTime < 0)
 	{

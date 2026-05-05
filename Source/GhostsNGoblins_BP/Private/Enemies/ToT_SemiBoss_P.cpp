@@ -45,7 +45,6 @@ void AToT_SemiBoss_P::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	
 }
 
 // Called every frame
@@ -90,13 +89,10 @@ void AToT_SemiBoss_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-	//float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-		
+	// Checks the health of the semi boss and applies if it doesn't equal to zero
 	if (CurrentHealth > 0.f)
 	{
 		CurrentHealth -= Damage;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, 
-	FString::Printf(TEXT("Damage: %f | Health Remaining: %f"), Damage, CurrentHealth));
 	}
 	
 	if (CurrentHealth <= 0.f)
@@ -104,7 +100,6 @@ void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage,
 		CurrentHealth = 0.f;
 		IsSemiBossDead = true;
 		StateTreeComponent->SendStateTreeEvent(Dead);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("should be dead now"));
 		
 		TArray<AActor*> PlayerArray;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AToT_PlayerCharacter::StaticClass(), PlayerArray);
