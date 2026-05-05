@@ -24,14 +24,14 @@ class GHOSTSNGOBLINS_BP_API IToT_BPI_Key_P
 public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void HasCryptKey();
+	void HasCryptKeyCPP();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void HasLevelKey();
+	void HasLevelKeyCPP();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void PickedUpArmour();
+	void PickedUpArmourCPP();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void HasBeatenSemiBoss();
+	void HasBeatenSemiBossCPP();
 };

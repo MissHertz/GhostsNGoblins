@@ -112,7 +112,7 @@ void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage,
 		{
 			if (Player && Player->Implements<UToT_BPI_Key_P>())
 			{
-				IToT_BPI_Key_P::Execute_HasBeatenSemiBoss(Player);
+				IToT_BPI_Key_P::Execute_HasBeatenSemiBossCPP(Player);
 			}
 		}
 	}
