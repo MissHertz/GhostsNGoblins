@@ -18,16 +18,17 @@ AToT_Zombie_P::AToT_Zombie_P()
 	// Setting up the overlap box of the zombie
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	PlayerOverlapBox->SetupAttachment(RootComponent);
+	PlayerOverlapBox->SetRelativeScale3D(FVector(10.f, 1.f, 3.f));
 	
 	// Binding the overlap box to the player detect function
-	PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::PlayerDetected);
+	// PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::PlayerDetected);
+	// PlayerOverlapBox->OnComponentEndOverlap.AddDynamic(this, &AToT_Zombie_P::PlayerNotDetected);
 	
 	// Binding the taking damage to the taking damage function
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
 	
 	// Setting up state tree and the chase event gameplay tag
 	EnemyStateTree = CreateDefaultSubobject<UStateTreeComponent>(TEXT("StateTreeComponent"));
-	ChaseEvent.Tag = FGameplayTag::RequestGameplayTag(TEXT("ChasePlayerEvent"));
 	
 	// Presetting the variable
 	ZombiesToKill = 3;
@@ -69,6 +70,8 @@ void AToT_Zombie_P::BeginPlay()
 	
 	// Casting to the player controller to be able to get the player and use the variables for the player
 	Player = Cast<AToT_PlayerCharacter>(UGameplayStatics::GetPlayerController(this, 0)->GetPawn());
+	
+	// ChaseEvent = FGameplayTag::RequestGameplayTag(TEXT("ChasePlayerEvent"));
 	
 	
 }
@@ -171,19 +174,30 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 }
 
 // Detects when player overlaps with the collision box of the zombie
-void AToT_Zombie_P::PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (PlayerBlueprint and OtherActor->IsA(PlayerBlueprint))
-	{
-		CanAttack = true;
-		EnemyStateTree->SendStateTreeEvent(ChaseEvent);
-	}
-	else
-	{
-		CanAttack = false;
-	}
-}
+// void AToT_Zombie_P::PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+// 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+// {
+// 	
+// 	// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Hello"));
+// 	if (PlayerBlueprint and OtherActor->IsA(PlayerBlueprint))
+// 	{
+// 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Hello, World!"));
+// 		CanAttack = true;
+// 		EnemyStateTree->SendStateTreeEvent(ChaseEvent);
+// 	}
+//
+// }
+//
+// void AToT_Zombie_P::PlayerNotDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+// 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+// {
+// 	if (PlayerBlueprint and OtherActor->IsA(PlayerBlueprint))
+// 	{
+// 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Goodbye, World!"));
+// 		CanAttack = false;
+// 	}
+// 	
+// }
 
 // Sending message to the movement block the enemy spawns in
 void AToT_Zombie_P::SetMovementBox()
