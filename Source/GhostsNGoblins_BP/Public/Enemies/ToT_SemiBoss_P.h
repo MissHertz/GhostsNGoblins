@@ -56,10 +56,10 @@ public:
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State Tree")
 	UStateTree* StateTree;*/
 	
-	UFUNCTION()
+	/*UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
 						UPrimitiveComponent* OtherComp, int OtherBodyIndex, 
-						bool bFromSweep, const FHitResult& SweepResult);
+						bool bFromSweep, const FHitResult& SweepResult);*/
 	
 	UFUNCTION()
 	void TakeDamage(AActor* DamagedActor, float Damage, 

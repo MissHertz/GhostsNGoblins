@@ -6,7 +6,7 @@
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Projectiles/ToT_ProjectileParent_P.h"
-//#include "Interaction/ToT_BPI_Key_P.h"
+#include "Interaction/ToT_BPI_Key_P.h"
 
 
 // Sets default values
@@ -33,7 +33,7 @@ AToT_SemiBoss_P::AToT_SemiBoss_P()
 	
 	// Collision setup
 	UCapsuleComponent* CollisionCapsule = GetCapsuleComponent();
-	CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_SemiBoss_P::OnOverlapBegin);
+	//CollisionCapsule->OnComponentBeginOverlap.AddDynamic(this, &AToT_SemiBoss_P::OnOverlapBegin);
 	
 	// Binding the event ApplyDamage to the function TakeDamage
 	OnTakeAnyDamage.AddDynamic(this, &AToT_SemiBoss_P::TakeDamage);
@@ -71,20 +71,11 @@ void AToT_SemiBoss_P::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void AToT_SemiBoss_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+/*void AToT_SemiBoss_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->IsA<AToT_ProjectileParent_P>())
-	{
-		this->PlayAnimMontage(TakingDamageMontage, 1.0, NAME_None);
-		/*UGameplayStatics::ApplyDamage(
-			this, 
-			1.0, 
-			OtherActor->GetInstigatorController(),
-			OtherActor, 
-			UDamageType::StaticClass());*/
-	}
-}
+	
+}*/
 
 void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
@@ -93,6 +84,16 @@ void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage,
 	if (CurrentHealth > 0.f)
 	{
 		CurrentHealth -= Damage;
+		if (DamageCauser->IsA<AToT_ProjectileParent_P>())
+        	{
+        		this->PlayAnimMontage(TakingDamageMontage, 1.0, NAME_None);
+        		/*UGameplayStatics::ApplyDamage(
+        			this, 
+        			1.0, 
+        			OtherActor->GetInstigatorController(),
+        			OtherActor, 
+        			UDamageType::StaticClass());*/
+        	}
 	}
 	
 	if (CurrentHealth <= 0.f)
