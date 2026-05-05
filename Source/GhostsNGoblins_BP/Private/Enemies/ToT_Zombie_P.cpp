@@ -15,14 +15,17 @@ AToT_Zombie_P::AToT_Zombie_P()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+	// Setting up the overlap box of the zombie
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	PlayerOverlapBox->SetupAttachment(RootComponent);
+	
+	// Binding the overlap box to the player detect function
 	PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::PlayerDetected);
-	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin); // Commented out as the function is not yet in use
 	
 	// Binding the taking damage to the taking damage function
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
 	
+	// Setting up state tree and the chase event gameplay tag
 	EnemyStateTree = CreateDefaultSubobject<UStateTreeComponent>(TEXT("StateTreeComponent"));
 	ChaseEvent.Tag = FGameplayTag::RequestGameplayTag(TEXT("ChasePlayerEvent"));
 	
@@ -150,13 +153,13 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 	}
 }
 
-
+// Detects when player overlaps with the collision box of the zombie
 void AToT_Zombie_P::PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (PlayerBlueprint and OtherActor->IsA(PlayerBlueprint))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player detected"));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player detected"));
 		CanAttack = true;
 		EnemyStateTree->SendStateTreeEvent(ChaseEvent);
 	}
@@ -271,10 +274,4 @@ void AToT_Zombie_P::AtCryptEnd_Implementation()
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
-// Currently not in use
-void AToT_Zombie_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	
-}
 

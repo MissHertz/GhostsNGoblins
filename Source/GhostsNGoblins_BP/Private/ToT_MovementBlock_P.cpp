@@ -53,7 +53,7 @@ void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = true;
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player entered box"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player entered box"));
 		EnemySpawnCooldown = EnemySpawnTime; 
 	}
 }
@@ -66,7 +66,7 @@ void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AAc
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = false;
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player left box"));
+		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player left box"));
 	}
 }
 
