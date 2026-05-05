@@ -47,7 +47,8 @@ void AToT_Bridge::RotateCPP_Implementation()
 		
 		if (Root)
 		{
-			FRotator BridgeRotation = FRotator(90.0,0.0,0.0);
+			FRotator Current = Root->GetComponentRotation();
+			FRotator BridgeRotation = FRotator(-90.0,Current.Yaw,Current.Roll);
 			Root->SetWorldRotation(BridgeRotation);
 		}
 	}
@@ -70,7 +71,8 @@ void AToT_Bridge::RotateCPP_Implementation()
 		
 			if (Root)
 			{
-				FRotator BridgeRotation = FRotator(-90.0,0.0,0.0);
+				FRotator Current = Root->GetComponentRotation();
+				FRotator BridgeRotation = FRotator(-90.0,Current.Yaw,Current.Roll);
 				Root->SetWorldRotation(BridgeRotation);
 			}
 		}
