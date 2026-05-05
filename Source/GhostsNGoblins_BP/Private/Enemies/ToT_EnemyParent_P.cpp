@@ -85,7 +85,6 @@ void AToT_EnemyParent_P::OnPlayerHit(UPrimitiveComponent* HitComponent, AActor* 
 		// Dealing damage if the enemy has not just hit the player this is to make sure the player has time to react before taking more damage
 		if (JustHit == false)
 		{
-			// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Has hit player.")); // Debug message
 			UGameplayStatics::ApplyDamage(HitActor, DamageToPlayer, GetInstigatorController(), this, UDamageType::StaticClass());
 			EnemyHitCooldown = EnemyHitCooldownTime;
 			JustHit = true; 

@@ -22,9 +22,9 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	EnemySpawnRange = 2; 
 	DelaySpawnTimer = 2.f;
 	
-	BatSpawnOffsetX = 600; 
+	BatSpawnOffsetX = 1000; 
 	BatSpawnOffsetZ = 50;
-	ZombieSpawnOffsetX = 500;
+	ZombieSpawnOffsetX = 750;
 	ZombieSpawnOffsetZ = 50;
 	
 }
@@ -53,7 +53,6 @@ void AToT_MovementBlock_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = true;
-		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player entered box"));
 		EnemySpawnCooldown = EnemySpawnTime; 
 	}
 }
@@ -66,7 +65,6 @@ void AToT_MovementBlock_P::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AAc
 	if (OtherActor and OtherActor->IsA(PlayerBlueprint))
 	{
 		PlayerInBox = false;
-		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player left box"));
 	}
 }
 
@@ -88,20 +86,14 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 			switch (RandomInteger)
 			{
 			case 0: 
-				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning ZOMBIE")); // Debug Message
 				SpawnZombie();
 				break;
 			case 1:
-				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning BAT")); // Debug Message
 				SpawnBat();
 				break;
 			default:
-				//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning NOTHING")); // Debug Message
 				break;
 			}
-			
-			// Debug message
-			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Spawning Enemy")); // Debug Message
 			
 			EnemySpawnCooldown = EnemySpawnTime;
 		}
@@ -113,7 +105,6 @@ void AToT_MovementBlock_P::SpawnZombie()
 {
 	if (Player == nullptr)
 	{
-		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa")); // Debug Message
 		return;
 	} 
 	
@@ -142,7 +133,6 @@ void AToT_MovementBlock_P::SpawnBat()
 {
 	if (Player == nullptr)
 	{
-		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("No playa")); // Debug Message
 		return;
 	} 
 	

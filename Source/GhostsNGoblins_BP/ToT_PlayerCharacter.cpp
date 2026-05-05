@@ -137,8 +137,6 @@ void AToT_PlayerCharacter::SwitchInUpdate(float InValue)
 // Switching in (closer to the camera) finished
 void AToT_PlayerCharacter::SwitchInFinished()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("In Movement finished"));
-	
 	// Creating a new location for the player to move
 	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
 	if (EnteredCrypt == false)
@@ -182,8 +180,6 @@ void AToT_PlayerCharacter::SwitchOutUpdate(float InValue)
 // Switching out(further from the camera) finished
 void AToT_PlayerCharacter::SwitchOutFinished()
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Out Movement finished"));
-	
 	// Creating a new location for the player to move
 	FVector ActorLocation = FVector(0.f, 0.f, 0.f); 
 	if (EnteredCrypt == false)

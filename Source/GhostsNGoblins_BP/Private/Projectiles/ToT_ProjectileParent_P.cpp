@@ -61,13 +61,9 @@ void AToT_ProjectileParent_P::Tick(float DeltaTime)
 void AToT_ProjectileParent_P::HitEnemy(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit something")); // Debug text
-	
 	// Checking if the actor hit is the one we have set as the enemy parent, if not this code will not run
 	if (OtherActor->IsA(EnemyBlueprint))
 	{
-		// GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Hit enemy")); // Debug text
-		
 		// Applying changes to the enemy it hits
 		UGameplayStatics::ApplyDamage(OtherActor, WeaponDamage, GetInstigatorController(), this, UDamageType::StaticClass());
 	}
