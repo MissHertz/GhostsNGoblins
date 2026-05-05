@@ -99,12 +99,46 @@ public:
 	/*
 	 * Setting movement positions
 	 */
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float DownGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float DownGraveyardPointLeft;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float UpperGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float UpperGraveyardPointLeft;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptGraveyardPointLeft;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptStartPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptStartPointLeft;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptMiddlePointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptMiddlePointLeft;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptEndPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptEndPointLeft;
+	
+	
+	
 	UFUNCTION()
 	void SetMovementBox();
 	
 	UFUNCTION()
 	void SetMovementPositions();
 	
+	// Changing each interface function to run when gotten the message
 	virtual void AtDownGraveyard_Implementation() override; 
 	virtual void AtUpperGraveyard_Implementation() override;
 	virtual void AtCryptGraveyard_Implementation() override;

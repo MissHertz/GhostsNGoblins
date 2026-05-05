@@ -20,6 +20,31 @@ AToT_Bat_P::AToT_Bat_P()
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetupAttachment(RootComponent);
 	CollisionSphere->SetSphereRadius(45.f);
+	
+	// Setting up patrol point variables
+	DownGraveyardPointRight = 8090.f;
+	DownGraveyardPointLeft = 3570.f;
+	DownGraveyardPointZ = -500.f;
+	
+	UpperGraveyardPointRight = 13600.f;
+	UpperGraveyardPointLeft = 8800.f;
+	UpperGraveyardPointZ = -230.f;
+	
+	CryptGraveyardPointRight = 16050.f;
+	CryptGraveyardPointLeft = 14450.f;
+	CryptGraveyardPointZ = -300.f;
+	
+	CryptStartPointRight = 7050.f;
+	CryptStartPointLeft = 5040.f;
+	CryptStartPointZ = -1700.f;
+	
+	CryptMiddlePointRight = 10850.f;
+	CryptMiddlePointLeft = 7830.f;
+	CryptMiddlePointZ = -1830.f;
+	
+	CryptEndPointRight = 14030.f;
+	CryptEndPointLeft = 12530.f;
+	CryptEndPointZ = -2100.f;
 }
 
 // Called when the game starts or when spawned
@@ -126,48 +151,48 @@ void AToT_Bat_P::SetMovementBlocks()
 void AToT_Bat_P::AtDownGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();
-	EnemyGoalPatrolRight = 8090.f;
-	EnemyGoalPatrolLeft = 3570.f;
-	MovementPosZ = -500;
+	EnemyGoalPatrolRight = DownGraveyardPointRight;
+	EnemyGoalPatrolLeft = DownGraveyardPointLeft;
+	MovementPosZ = DownGraveyardPointZ;
 }
 
 void AToT_Bat_P::AtUpperGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtUpperGraveyard_Implementation();
-	EnemyGoalPatrolRight = 13600.f;
-	EnemyGoalPatrolLeft = 8800.f;
-	MovementPosZ = -230;
+	EnemyGoalPatrolRight = UpperGraveyardPointRight;
+	EnemyGoalPatrolLeft = UpperGraveyardPointLeft;
+	MovementPosZ = UpperGraveyardPointZ;
 }
 
 void AToT_Bat_P::AtCryptGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptGraveyard_Implementation();
-	EnemyGoalPatrolRight = 16050.f;
-	EnemyGoalPatrolLeft = 14450.f;
-	MovementPosZ = -300;
+	EnemyGoalPatrolRight = CryptGraveyardPointRight;
+	EnemyGoalPatrolLeft = CryptGraveyardPointLeft;
+	MovementPosZ = CryptGraveyardPointZ;
 }
 
 void AToT_Bat_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
-	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 5040.f;
-	MovementPosZ = -1700;
+	EnemyGoalPatrolRight = CryptStartPointRight;
+	EnemyGoalPatrolLeft = CryptStartPointLeft;
+	MovementPosZ = CryptStartPointZ;
 }
 
 void AToT_Bat_P::AtCryptMiddle_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptMiddle_Implementation();
-	EnemyGoalPatrolRight = 10850.f;
-	EnemyGoalPatrolLeft = 7830.f;
-	MovementPosZ = -1830;
+	EnemyGoalPatrolRight = CryptMiddlePointRight;
+	EnemyGoalPatrolLeft = CryptMiddlePointLeft;
+	MovementPosZ = CryptMiddlePointZ;
 }
 
 void AToT_Bat_P::AtCryptEnd_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptEnd_Implementation();
-	EnemyGoalPatrolRight = 14030.f;
-	EnemyGoalPatrolLeft = 12530.f;
-	MovementPosZ = -2100;
+	EnemyGoalPatrolRight = CryptEndPointRight;
+	EnemyGoalPatrolLeft = CryptEndPointLeft;
+	MovementPosZ = CryptEndPointZ;
 }
 

@@ -44,6 +44,49 @@ public:
 		class AController* InstigatedBy, 
 		AActor* DamageCauser);
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float DownGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float DownGraveyardPointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float DownGraveyardPointZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float UpperGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float UpperGraveyardPointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float UpperGraveyardPointZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptGraveyardPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptGraveyardPointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptGraveyardPointZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptStartPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptStartPointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptStartPointZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptMiddlePointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptMiddlePointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptMiddlePointZ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptEndPointRight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptEndPointLeft;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol points")
+	float CryptEndPointZ;
+	
+	
 	UFUNCTION()
 	void SetMovementPositions();
 	void SetMovementBlocks();

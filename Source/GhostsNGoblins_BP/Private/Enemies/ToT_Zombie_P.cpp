@@ -35,6 +35,25 @@ AToT_Zombie_P::AToT_Zombie_P()
 	AnimationTime = 0.6;
 	AnimTimeCounter = 0;
 	
+	// Setting all possible patrol point variables
+	DownGraveyardPointRight = 8090.f;
+	DownGraveyardPointLeft = 3570.f;
+	
+	UpperGraveyardPointRight = 13600.f;
+	UpperGraveyardPointLeft = 8800.f;
+	
+	CryptGraveyardPointRight = 16050.f;
+	CryptGraveyardPointLeft = 14450.f;
+	
+	CryptStartPointRight = 7050.f;
+	CryptStartPointLeft = 5040.f;
+	
+	CryptMiddlePointRight = 10850.f;
+	CryptMiddlePointLeft = 7830.f;
+	
+	CryptEndPointRight = 14030.f;
+	CryptEndPointLeft = 12530.f;
+	
 	
 }
 
@@ -229,48 +248,48 @@ void AToT_Zombie_P::SetMovementPositions()
 void AToT_Zombie_P::AtDownGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtDownGraveyard_Implementation();
-	EnemyGoalPatrolRight = 8090.f;
-	EnemyGoalPatrolLeft = 3570.f;
+	EnemyGoalPatrolRight = DownGraveyardPointRight;
+	EnemyGoalPatrolLeft = DownGraveyardPointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtUpperGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtUpperGraveyard_Implementation();
-	EnemyGoalPatrolRight = 13600.f;
-	EnemyGoalPatrolLeft = 8800.f;
+	EnemyGoalPatrolRight = UpperGraveyardPointRight;
+	EnemyGoalPatrolLeft = UpperGraveyardPointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptGraveyard_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptGraveyard_Implementation();
-	EnemyGoalPatrolRight = 16050.f;
-	EnemyGoalPatrolLeft = 14450.f;
+	EnemyGoalPatrolRight = CryptGraveyardPointRight;
+	EnemyGoalPatrolLeft = CryptGraveyardPointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptStart_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptStart_Implementation();
-	EnemyGoalPatrolRight = 7050.f;
-	EnemyGoalPatrolLeft = 5040.f;
+	EnemyGoalPatrolRight = CryptStartPointRight;
+	EnemyGoalPatrolLeft = CryptStartPointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptMiddle_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptMiddle_Implementation();
-	EnemyGoalPatrolRight = 10850.f;
-	EnemyGoalPatrolLeft = 7830.f;
+	EnemyGoalPatrolRight = CryptMiddlePointRight;
+	EnemyGoalPatrolLeft = CryptMiddlePointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
 void AToT_Zombie_P::AtCryptEnd_Implementation()
 {
 	IToT_MovementBlocks_P::AtCryptEnd_Implementation();
-	EnemyGoalPatrolRight = 14030.f;
-	EnemyGoalPatrolLeft = 12530.f;
+	EnemyGoalPatrolRight = CryptEndPointRight;
+	EnemyGoalPatrolLeft = CryptEndPointLeft;
 	//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Movement goals set"));
 }
 
