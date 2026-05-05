@@ -1,26 +1,56 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Projectiles/ToT_ProjectileTorch_P.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h"
+#include "Components/SkeletalMeshComponent.h"
 
-
-// Sets default values
 AToT_ProjectileTorch_P::AToT_ProjectileTorch_P()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+    
+	CollisionCapsule->OnComponentHit.AddDynamic(this, &AToT_ProjectileTorch_P::OnHittingEnemy);
+	ExistingFire = false;
+
+	if (Projectile)
+	{
+		Projectile->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+	}
 }
 
-// Called when the game starts or when spawned
 void AToT_ProjectileTorch_P::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay(); // This runs the Blueprint BeginPlay, which handles the impulse
 }
 
-// Called every frame
 void AToT_ProjectileTorch_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+    
+	ExsistanceTime -= DeltaTime; 
+	if (ExsistanceTime < 0)
+	{
+		this->Destroy();
+	}
 }
 
+void AToT_ProjectileTorch_P::OnHittingEnemy(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (!ExistingFire)
+	{
+		ExistingFire = true;
+		FVector SpawnLocation = Projectile->GetComponentLocation();
+		FRotator SpawnRotation(0.0, 0.0, 0.0);
+		FActorSpawnParameters SpawnParameters;
+		SpawnParameters.Owner = this;
+		SpawnParameters.Instigator = GetInstigator();
+        
+		GetWorld()->SpawnActor<AActor>(FireballGroundFire, SpawnLocation, 
+			SpawnRotation, SpawnParameters);
+
+		if (OtherActor && OtherActor != this)
+		{
+			UGameplayStatics::ApplyDamage(OtherActor, WeaponDamage, 
+				GetInstigatorController(), this, UDamageType::StaticClass());
+		}
+	}
+}

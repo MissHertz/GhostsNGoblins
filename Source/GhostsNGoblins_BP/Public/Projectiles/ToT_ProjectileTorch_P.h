@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NiagaraComponent.h"
 #include "ToT_ProjectileParent_P.h"
 #include "ToT_ProjectileTorch_P.generated.h"
 
@@ -27,5 +28,12 @@ public:
 	bool ExistingFire;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Niagara")
-	Uniagara* Fire;
+	UNiagaraComponent* Fire;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawning")
+	TSubclassOf<AActor> FireballGroundFire;
+	
+	UFUNCTION()
+	void OnHittingEnemy(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
+		UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };

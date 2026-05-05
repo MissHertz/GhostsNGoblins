@@ -7,6 +7,7 @@
 #include "ToT_EnemyParent_P.h"
 #include "Components\StateTreeComponent.h"
 #include "Interaction/ToT_BPI_Key_P.h"
+#include "GameplayTagContainer.h"
 #include "ToT_SemiBoss_P.generated.h"
 
 UCLASS()

@@ -8,7 +8,7 @@ public class GhostsNGoblins_BP : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "StateTreeModule", "GameplayStateTreeModule", "Niagara" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "StateTreeModule", "GameplayStateTreeModule", "Niagara", "GameplayTags" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {"Slate", "SlateCore"});
 
