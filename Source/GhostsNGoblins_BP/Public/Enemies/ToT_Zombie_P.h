@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "StateTreeEvents.h"
 #include "ToT_EnemyParent_P.h"
 #include "Components/BoxComponent.h"
+#include "Components/StateTreeComponent.h"
 #include "GhostsNGoblins_BP/ToT_PlayerCharacter.h"
 #include "MovementBlocks/ToT_MovementBlocks_P.h"
 #include "Projectiles/ToT_ProjectileParent_P.h"
@@ -77,6 +79,16 @@ public:
 	// The key the zombie can drop when killed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drop Objects")
 	UClass* DropKey; 
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "State Tree")
+	FStateTreeEvent ChaseEvent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State Tree")
+	UStateTreeComponent* EnemyStateTree; 
+	
+	UFUNCTION()
+	void PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	/*
 	 * Setting movement positions

@@ -17,10 +17,14 @@ AToT_Zombie_P::AToT_Zombie_P()
 	
 	PlayerOverlapBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	PlayerOverlapBox->SetupAttachment(RootComponent);
+	PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::PlayerDetected);
 	//PlayerOverlapBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_Zombie_P::OnOverlapBegin); // Commented out as the function is not yet in use
 	
 	// Binding the taking damage to the taking damage function
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Zombie_P::ZombieAttacked);
+	
+	EnemyStateTree = CreateDefaultSubobject<UStateTreeComponent>(TEXT("StateTreeComponent"));
+	ChaseEvent.Tag = FGameplayTag::RequestGameplayTag(TEXT("ChasePlayerEvent"));
 	
 	// Presetting the variable
 	ZombiesToKill = 3;
@@ -146,6 +150,21 @@ void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage,
 	}
 }
 
+
+void AToT_Zombie_P::PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (PlayerBlueprint and OtherActor->IsA(PlayerBlueprint))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Turquoise, TEXT("Player detected"));
+		CanAttack = true;
+		EnemyStateTree->SendStateTreeEvent(ChaseEvent);
+	}
+	else
+	{
+		CanAttack = false;
+	}
+}
 
 // Sending message to the movement block the enemy spawns in
 void AToT_Zombie_P::SetMovementBox()
