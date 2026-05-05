@@ -22,7 +22,7 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	EnemySpawnRange = 2; 
 	DelaySpawnTimer = 2.f;
 	
-	BatSpawnOffsetX = 600; 
+	BatSpawnOffsetX = 1000; 
 	BatSpawnOffsetZ = 50;
 	ZombieSpawnOffsetX = 500;
 	ZombieSpawnOffsetZ = 50;
