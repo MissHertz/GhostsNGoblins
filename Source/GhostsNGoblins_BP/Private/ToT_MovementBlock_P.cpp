@@ -24,7 +24,7 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	
 	BatSpawnOffsetX = 1000; 
 	BatSpawnOffsetZ = 50;
-	ZombieSpawnOffsetX = 500;
+	ZombieSpawnOffsetX = 750;
 	ZombieSpawnOffsetZ = 50;
 	
 }
