@@ -18,6 +18,7 @@ public:
 	// Sets default values for this character's properties
 	AToT_BigBoss_P();
 
+	//Adding the choice of triggering the victory widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> VictoryWidgetClass;
 	
@@ -28,6 +29,7 @@ protected:
 	//Changing the mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	USkeletalMesh* BossLowHealth;
+	//Adding the on hit animation
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	UAnimMontage* HitReactMontage;
 
