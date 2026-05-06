@@ -2,6 +2,7 @@
 
 
 #include "Enemies/ToT_BigBoss_P.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -39,7 +40,12 @@ void AToT_BigBoss_P::BigBossAttacked(AActor* DamagedActor, float Damage, const c
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= Damage;
-	        
+		if (HitReactMontage)
+		{
+			// Plays the montage on the character's mesh
+			PlayAnimMontage(HitReactMontage);
+		}
+		
 		if (CurrentHealth < 120 && BossLowHealth)
 		{
 			GetMesh()->SetSkeletalMesh(BossLowHealth);
