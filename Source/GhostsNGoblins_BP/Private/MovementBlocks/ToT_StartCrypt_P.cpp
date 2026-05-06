@@ -26,6 +26,7 @@ void AToT_StartCrypt_P::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+// Getting and sending interface message
 void AToT_StartCrypt_P::EnemyInMovementBlock_Implementation(AActor* Executor)
 {
 	Super::EnemyInMovementBlock_Implementation(Executor);

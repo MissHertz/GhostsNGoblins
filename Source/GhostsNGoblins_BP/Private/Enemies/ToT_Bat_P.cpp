@@ -13,10 +13,13 @@ AToT_Bat_P::AToT_Bat_P()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+	// Presetting the Z movement postion
 	MovementPosZ = -500;
 	
+	// Binding any damage to bat attacked function
 	OnTakeAnyDamage.AddDynamic(this, &AToT_Bat_P::BatAttacked);
 	
+	// Setting up collision sphere for taking damage check
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollisionSphere"));
 	CollisionSphere->SetupAttachment(RootComponent);
 	CollisionSphere->SetSphereRadius(45.f);
@@ -52,12 +55,12 @@ void AToT_Bat_P::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Setting lane and patrol points
 	SetMovementPositions();
 	SetMovementBlocks();
 	
+	// Setting movement mode to flying
 	GetCharacterMovement()->SetMovementMode(MOVE_Flying);
-	
-	
 }
 
 // Called every frame
@@ -72,13 +75,15 @@ void AToT_Bat_P::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+// Bat attacked function
 void AToT_Bat_P::BatAttacked(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
+	// Creating an actor array to get overlapping actors in the collision sphere
 	TArray<AActor*> ActorArray;
 	CollisionSphere->GetOverlappingActors(ActorArray);
 	
-	
+	// Checking if it is the collision sphere that is hit and that it is the player weapon, taking damage if true
 	for (AActor* OverlappingActor : ActorArray)
 	{
 		if (Weapon and OverlappingActor->IsA(Weapon))
@@ -95,6 +100,7 @@ void AToT_Bat_P::BatAttacked(AActor* DamagedActor, float Damage, const class UDa
 	}
 }
 
+// Setting the lane position, destroying bat if it is not in a correct lane
 void AToT_Bat_P::SetMovementPositions()
 {
 	FVector BatPosition = GetActorLocation();
@@ -121,6 +127,7 @@ void AToT_Bat_P::SetMovementPositions()
 	
 }
 
+// Setting patrol points by sending message to the overlapping movement block
 void AToT_Bat_P::SetMovementBlocks()
 {
 	// Creating the array for the overlapping actors

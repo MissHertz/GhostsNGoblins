@@ -2,7 +2,6 @@
 
 
 #include "Enemies/ToT_EnemyParent_P.h"
-
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -55,6 +54,7 @@ void AToT_EnemyParent_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	// Actor just hit cooldown "timer"
 	if (JustHit == true)
 	{
 		if (EnemyHitCooldown > 0)

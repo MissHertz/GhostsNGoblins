@@ -32,9 +32,11 @@ void AToT_Plant_P::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+// Plant attacked function
 void AToT_Plant_P::PlantAttacked(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
+	// Checking if current health is more than zero, taking damage if true
 	if (CurrentHealth > 0)
 	{
 		CurrentHealth -= Damage;
