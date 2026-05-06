@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "ToT_EnemyParent_P.h"
-#include "Blueprint/UserWidget.h" // Added for UUserWidget
+#include "Blueprint/UserWidget.h" 
+#include "Animation/AnimMontage.h"
 #include "ToT_BigBoss_P.generated.h"
+
 
 UCLASS()
 class GHOSTSNGOBLINS_BP_API AToT_BigBoss_P : public AToT_EnemyParent_P
@@ -26,6 +28,8 @@ protected:
 	//Changing the mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	USkeletalMesh* BossLowHealth;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	UAnimMontage* HitReactMontage;
 
 public:
 	// Called every frame
