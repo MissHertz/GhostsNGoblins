@@ -82,25 +82,11 @@ public:
 	
 	
 	/*
-	 * Checking for player, currently not in use
+	 * Enemy state tree
 	 */
-	
-	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "State Tree")
-	// FGameplayTag ChaseEvent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State Tree")
 	UStateTreeComponent* EnemyStateTree; 
-	
-	// The detection function for the zombie
-	// UFUNCTION()
-	// void PlayerDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	// UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	//
-	// UFUNCTION()
-	// void PlayerNotDetected(UPrimitiveComponent* OverlappedComp,
-	//    AActor* OtherActor,
-	//    UPrimitiveComponent* OtherComp,
-	//    int32 OtherBodyIndex);
 	
 	/*
 	 * Setting movement positions
