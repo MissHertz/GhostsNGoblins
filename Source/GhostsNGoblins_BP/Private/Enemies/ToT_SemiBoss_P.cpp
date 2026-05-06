@@ -71,12 +71,6 @@ void AToT_SemiBoss_P::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-/*void AToT_SemiBoss_P::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	
-}*/
-
 void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
@@ -87,12 +81,6 @@ void AToT_SemiBoss_P::TakeDamage(AActor* DamagedActor, float Damage,
 		if (DamageCauser->IsA<AToT_ProjectileParent_P>())
         	{
         		this->PlayAnimMontage(TakingDamageMontage, 1.0, NAME_None);
-        		/*UGameplayStatics::ApplyDamage(
-        			this, 
-        			1.0, 
-        			OtherActor->GetInstigatorController(),
-        			OtherActor, 
-        			UDamageType::StaticClass());*/
         	}
 	}
 	

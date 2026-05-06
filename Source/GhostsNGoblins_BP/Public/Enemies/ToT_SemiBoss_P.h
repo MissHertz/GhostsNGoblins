@@ -53,14 +53,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State Tree")
 	UStateTreeComponent* StateTreeComponent;
 	
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State Tree")
-	UStateTree* StateTree;*/
-	
-	/*UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, 
-						UPrimitiveComponent* OtherComp, int OtherBodyIndex, 
-						bool bFromSweep, const FHitResult& SweepResult);*/
-	
 	UFUNCTION()
 	void TakeDamage(AActor* DamagedActor, float Damage, 
 		const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
