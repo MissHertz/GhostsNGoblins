@@ -12,10 +12,12 @@ AToT_MovementBlock_P::AToT_MovementBlock_P()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+	// Setting up the collision box and binding to the overlap begin and end fuctions
 	CollisionBox=CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AToT_MovementBlock_P::OnOverlapBegin);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &AToT_MovementBlock_P::OnOverlapEnd);
 	
+	// Setting variables
 	PlayerInBox = false; 
 	EnemySpawnTime = 2;
 	EnemySpawnCooldown = 3;
@@ -95,6 +97,7 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 				break;
 			}
 			
+			// Setting the cooldown for spawning
 			EnemySpawnCooldown = EnemySpawnTime;
 		}
 	}
@@ -103,24 +106,30 @@ void AToT_MovementBlock_P::SpawnEnemies(float DeltaTime)
 // Spawning zombie function
 void AToT_MovementBlock_P::SpawnZombie()
 {
+	// Stops function if player is an empty pointer
 	if (Player == nullptr)
 	{
 		return;
 	} 
 	
+	// Getting the players location and setting the spawn offset
 	FVector PlayerLocation = Player->GetActorLocation();
 	float PositionX = PlayerLocation.X + ZombieSpawnOffsetX;
 	float PositionZ = PlayerLocation.Z + ZombieSpawnOffsetZ;
 	
+	// Setting the spawn location
 	FVector ZombieSpawnLocation = FVector(PositionX, PlayerLocation.Y, PositionZ); 
 	
+	// Setting the spawn rotation
 	FRotator ZombieRotation;
 	ZombieRotation.Yaw = 0;
 	ZombieRotation.Roll = 0;
 	ZombieRotation.Pitch = 0;
 	
+	// Setting the spawn parameters 
 	FActorSpawnParameters SpawnParameters;
 	
+	// Spawning the zombie
 	GetWorld()->SpawnActor<ACharacter>(Zombie, 
 		ZombieSpawnLocation,
 		ZombieRotation,
@@ -131,6 +140,7 @@ void AToT_MovementBlock_P::SpawnZombie()
 // Spawning bat function
 void AToT_MovementBlock_P::SpawnBat()
 {
+	// Stops function if player is an empty pointer
 	if (Player == nullptr)
 	{
 		return;

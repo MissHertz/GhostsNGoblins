@@ -75,6 +75,7 @@ void AToT_Zombie_P::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	// Timer for the death montage so the monatge gets shown before the zombie destroys itself
 	if (AnimTimeCounter > 0)
 	{
 		AnimTimeCounter -= DeltaTime;
@@ -96,12 +97,14 @@ void AToT_Zombie_P::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 void AToT_Zombie_P::ZombieAttacked(AActor* DamagedActor, float Damage, 
 	const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
+	// Creating an array and getting the overlapping actors of the capsuel component
 	TArray<AActor*> ActorArray;
-	
 	GetCapsuleComponent()->GetOverlappingActors(ActorArray);
 	
+	// Going through the overlapping actors
 	for (AActor* OverlappingActor : ActorArray)
 	{
+		// Checking if the thing dealing damage is a weapon or the ground fire
 		if ((Weapon and OverlappingActor->IsA(Weapon)) or (GroundFire and OverlappingActor->IsA(GroundFire)))
 		{
 			// Checks if the health is above zero
