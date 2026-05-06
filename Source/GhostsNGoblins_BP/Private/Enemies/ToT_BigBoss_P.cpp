@@ -42,7 +42,6 @@ void AToT_BigBoss_P::BigBossAttacked(AActor* DamagedActor, float Damage, const c
 		CurrentHealth -= Damage;
 		if (HitReactMontage)
 		{
-			// Plays the montage on the character's mesh
 			PlayAnimMontage(HitReactMontage);
 		}
 		
@@ -53,14 +52,14 @@ void AToT_BigBoss_P::BigBossAttacked(AActor* DamagedActor, float Damage, const c
 	 
 		if (CurrentHealth <= 0)
 		{
-			// Logic to execute before elimination
 			if (VictoryWidgetClass)
 			{
 				APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 				if (PC)
 				{
-					// Create the widget instance
+					// Creating the widget instance
 					UUserWidget* VictoryWidget = CreateWidget<UUserWidget>(PC, VictoryWidgetClass);
+					
 					if (VictoryWidget)
 					{
 						// Add the widget to the player's screen
